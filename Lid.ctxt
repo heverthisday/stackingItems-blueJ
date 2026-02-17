@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Lid
+comment0.text=\r\n\ representa\ una\ tapa\ del\ simulador\ StackingItems.\r\n\ cada\ tapa\ tiene\ una\ altura\ de\ 1\ cm\ y\ corresponde\ a\ una\ taza\ especifica\r\n\ @author\ hever\r\n
+comment1.params=number\ color
+comment1.target=Lid(int,\ java.lang.String)
+comment1.text=\r\n\ contsructor\ de\ lid\ \r\n\ @param\ number\ numero\ de\ tapa(debe\ corresponder\ a\ una\ taza)\r\n\ @param\ color\ color\ de\ la\ tapa(igual\ al\ de\ la\ taza)\r\n
+comment2.params=
+comment2.target=void\ makeVisible()
+comment3.params=
+comment3.target=void\ makeInvisible()
+comment4.params=
+comment4.target=int\ getHeight()
+comment4.text=\r\n\ reotrna\ la\ altura\ de\ la\ tapa\ que\ siempre\ es\ 1\r\n
+comment5.params=
+comment5.target=int\ getNumber()
+comment5.text=\r\n\ RETORNA\ EL\ NUMERO\ DE\ LA\ TAPA\r\n
+numComments=6
