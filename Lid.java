@@ -45,4 +45,25 @@ public class Lid{
     public int getNumber(){
         return number;
     }
+    /**
+ * Retorna el color de la tapa
+ */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+     * Configura la posición y tamaño visual de la tapa
+     * @param height Altura en píxeles
+     * @param width Ancho en píxeles
+     * @param x Posición X
+     * @param y Posición Y
+     * @param color Color de la tapa
+     */
+    public void setVisualProperties(int height, int width, int x, int y, String color) {
+        body.changeSize(height, width);
+        body.moveHorizontal(x);
+        body.moveVertical(y);
+        body.changeColor(color);
+    }
 }
