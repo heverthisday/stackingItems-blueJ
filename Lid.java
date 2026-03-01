@@ -1,66 +1,68 @@
 /**
- * representa una tapa del simulador StackingItems.
- * cada tapa tiene una altura de 1 cm y corresponde a una taza especifica
- * @author hever
+ * Representa una tapa del simulador StackingItems.
+ * Cada tapa tiene 1 cm de altura
+ * @author Hever
  */
-public class Lid{
-    private static final int  LID_HEIGHT = 1;
-    //atributos
+public class Lid implements Item {
     private int number;
+    private int height;
     private String color;
-    private int xPosition;
-    private int yPosition;
     
     private Rectangle body;
-    /**
-     * contsructor de lid 
-     * @param number numero de tapa(debe corresponder a una taza)
-     * @param color color de la tapa(igual al de la taza)
-     */
-    public Lid(int number,String color){
-    this.number = number;
-    this.color = color;
-    this.xPosition = 0;
-    this.yPosition = 0;
-    // crear lo visual
-    body = new Rectangle();
     
+    public Lid(int number, String color) {
+        this.number = number;
+        this.height = 1;  // Todas las tapas tienen 1cm de altura
+        this.color = color;
+        
+        body = new Rectangle();
     }
-    public void makeVisible(){
+    
+    public void makeVisible() {
         body.makeVisible();
     }
     
-    public void makeInvisible(){
+    public void makeInvisible() {
         body.makeInvisible();
     }
-    /**
-     * reotrna la altura de la tapa que siempre es 1
-     */
-    public int getHeight(){
-        return LID_HEIGHT;
+    
+    public int getHeight() {
+        return height;
     }
-    /**
-     * RETORNA EL NUMERO DE LA TAPA
-     */
-    public int getNumber(){
+    
+    public int getNumber() {
         return number;
     }
-    /**
- * Retorna el color de la tapa
- */
+    
     public String getColor() {
         return color;
     }
-
-    /**
-     * Configura la posición y tamaño visual de la tapa
+    
+    public String getType() {
+        return "lid";
+    }
+    
+    public void setVisualProperties(int height, int width, int x, int y, String color) {
+        body.changeSize(height, width);
+        body.moveHorizontal(x);
+        body.moveVertical(y);
+        body.changeColor(color);
+    }
+        /**
+     * Redibuja la tapa en una nueva posición absoluta
+     * Crea un nuevo Rectangle desde cero
      * @param height Altura en píxeles
      * @param width Ancho en píxeles
-     * @param x Posición X
-     * @param y Posición Y
+     * @param x Posición X absoluta
+     * @param y Posición Y absoluta
      * @param color Color de la tapa
      */
-    public void setVisualProperties(int height, int width, int x, int y, String color) {
+    public void redraw(int height, int width, int x, int y, String color) {
+        // Borrar el Rectangle anterior
+        body.makeInvisible();
+        
+        // Crear nuevo Rectangle desde cero (posición 0,0)
+        body = new Rectangle();
         body.changeSize(height, width);
         body.moveHorizontal(x);
         body.moveVertical(y);
