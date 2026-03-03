@@ -5,12 +5,13 @@
  */
 public class Cup implements Item {
     private static final int BASE_THICKNESS = 1;
+    private static final String[] TAPPED_COLORS = {"lightgray", "lightblue", "brown", "purple"};
     
     private int number;
     private int height;
     private String color;
-    private int xPosition;
-    private int yPosition;
+    private boolean isTapped;
+    private String tappedColor;  // Color distinto cuando est� tapada
     
     private Rectangle body;
     
@@ -18,9 +19,8 @@ public class Cup implements Item {
         this.number = number;
         this.height = 2 * number - 1;
         this.color = color;
-        this.xPosition = 0;
-        this.yPosition = 0;
-        
+        this.isTapped = false;
+        this.tappedColor = TAPPED_COLORS[number % TAPPED_COLORS.length];
         body = new Rectangle();
     }
     
@@ -52,30 +52,41 @@ public class Cup implements Item {
         return "cup";
     }
     
-    public void setVisualProperties(int height, int width, int x, int y, String color) {
-        body.changeSize(height, width);
-        body.moveHorizontal(x);
-        body.moveVertical(y);
-        body.changeColor(color);
-    }
     /**
-     * Redibuja la taza en una nueva posición absoluta
+     * Marca la taza como tapada o destapada.
+     */
+    public void setTapped(boolean tapped) {
+        this.isTapped = tapped;
+    }
+    
+    /**
+     * Retorna true si la taza est� tapada.
+     */
+    public boolean isTapped() {
+        return isTapped;
+    }
+    
+
+    /**
+     * Redibuja la taza en una nueva posici�n absoluta
      * Crea un nuevo Rectangle desde cero
-     * @param height Altura en píxeles
-     * @param width Ancho en píxeles
-     * @param x Posición X absoluta
-     * @param y Posición Y absoluta
+     * @param height Altura en p�xeles
+     * @param width Ancho en p�xeles
+     * @param x Posici�n X absoluta
+     * @param y Posici�n Y absoluta
      * @param color Color de la taza
      */
     public void redraw(int height, int width, int x, int y, String color) {
         // Borrar el Rectangle anterior
         body.makeInvisible();
         
-        // Crear nuevo Rectangle desde cero (posición 0,0)
+        // Crear nuevo Rectangle desde cero (posici�n 0,0)
         body = new Rectangle();
         body.changeSize(height, width);
         body.moveHorizontal(x);
         body.moveVertical(y);
+        
+        // Mostrar siempre el color original (no cambiar apariencia cuando est� tapada)
         body.changeColor(color);
     }
 }

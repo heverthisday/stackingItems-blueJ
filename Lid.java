@@ -42,30 +42,21 @@ public class Lid implements Item {
         return "lid";
     }
     
-    public void setVisualProperties(int height, int width, int x, int y, String color) {
-        body.changeSize(height, width);
-        body.moveHorizontal(x);
-        body.moveVertical(y);
-        body.changeColor(color);
-    }
-        /**
-     * Redibuja la tapa en una nueva posición absoluta
-     * Crea un nuevo Rectangle desde cero
-     * @param height Altura en píxeles
-     * @param width Ancho en píxeles
-     * @param x Posición X absoluta
-     * @param y Posición Y absoluta
-     * @param color Color de la tapa
+/**
+ * Redibuja la tapa en una nueva posición absoluta
+ */
+public void redraw(int height, int width, int x, int y, String color) {
+    body.makeInvisible();
+    body = new Rectangle();
+    body.changeSize(height, width);
+    body.moveHorizontal(x);
+    body.moveVertical(y);
+    // Usar siempre el color original de la tapa (no cambiar apariencia al emparejar)
+    body.changeColor(this.color);
+}
+
+    /**
+     * Cambia el color de la tapa (útil para emparejar con la taza correspondiente)
      */
-    public void redraw(int height, int width, int x, int y, String color) {
-        // Borrar el Rectangle anterior
-        body.makeInvisible();
-        
-        // Crear nuevo Rectangle desde cero (posición 0,0)
-        body = new Rectangle();
-        body.changeSize(height, width);
-        body.moveHorizontal(x);
-        body.moveVertical(y);
-        body.changeColor(color);
-    }
+    // setColor se elimina para evitar que la tapa adopte colores externos
 }

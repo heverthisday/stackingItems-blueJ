@@ -108,6 +108,14 @@ public class Canvas{
     	shapes.remove(referenceObject);
     	redraw();
     }
+    /**
+ * Erase all shapes from the canvas and redraw background
+ * Public version of private erase method
+ */
+    public void eraseAll() {
+        erase();
+        canvas.repaint();
+    }
 
     /**
      * Set the foreground colour of the Canvas.
