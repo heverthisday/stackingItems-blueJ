@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * Clase principal del simulador StackingItems.
- * Versión LIMPIA con una sola lista (items)
+ * Versión  con una sola lista (items)
  * 
  * @author Hever
  * @version 4.0 - Reestructuración con 1 lista
@@ -215,8 +215,8 @@ public class Tower {
     /**
      * Reorganiza la lista de items de forma que cada taza esté inmediatamente
      * seguida por su tapa correspondiente (si existe).
-     * Por ejemplo: [c4, c2, c3, l2, l4, l3] → [c4, l4, c3, l3, c2, l2]
-     * Las tazas que tienen su tapa se marcan como "tapadas" (color gris).
+     * Por ejemplo: [c4, c2, c3, l2, l4, l3]....[c4, l4, c3, l3, c2, l2]
+     
      */
     public void coverAvailableCups() {
         ArrayList<Item> reorganized = new ArrayList<>();
@@ -302,7 +302,7 @@ public void pushCup(int i) {
     // 4. Agregar a items
     items.add(cup);
     
-    // 5. FORMATEAR TODO
+    // 5. borrar todo
     redrawAll();
     
     ok = true;
@@ -340,7 +340,7 @@ private int calculateHeight() {
 }
 
 /**
- * Redibuja TODA la torre desde cero
+ * Redibuja toda la torre desde cero
  */
 private void redrawAll() {
     if (!isVisible) return;
@@ -596,9 +596,7 @@ public void pushLid(int i) {
     /**
      * Remueve una taza específica (por número) de la torre.
      * Si el ítem no existe muestra mensaje.
-                                // Asegurar que la tapa tenga el color de la taza
-                                lid.setColor(cup.getColor());
-                                reorganized.add(lid);
+     */
     public void removeCup(int number) {
         int idx = -1;
         for (int i = 0; i < items.size(); i++) {
@@ -826,7 +824,7 @@ public int height() {
             }
         }
         
-        // Si encontr� un intercambio que reduce altura, ejecutarlo y retornar
+        // Si encontro un intercambio que reduce altura, ejecutarlo y retornar
         if (bestSwap != null) {
             String typeA = (String) bestSwap[0];
             int numA = (int) bestSwap[1];
@@ -846,9 +844,9 @@ public int height() {
         
         ok = false;
         if (isVisible) {
-            JOptionPane.showMessageDialog(null, "No se encontr� intercambio que reduzca la altura");
+            JOptionPane.showMessageDialog(null, "No se encontro intercambio que reduzca la altura");
         } else {
-            System.out.println("No se encontr� intercambio que reduzca la altura");
+            System.out.println("No se encontro intercambio que reduzca la altura");
         }
         return null;
     }

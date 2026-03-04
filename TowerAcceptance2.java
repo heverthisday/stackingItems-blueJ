@@ -1,37 +1,59 @@
+/**
+ * Prueba de aceptacion 2 - Swap de cups.
+ * Verifica que al intercambiar cup 1 y cup 4,
+ * sus posiciones se invierten correctamente.
+ * Se ejecuta en modo invisible.
+ * 
+ * @author Hever
+ * @version 2.0
+ */
 public class TowerAcceptance2 {
     public static void main(String[] args) {
         Tower t = new Tower(5, 20);
-        // Agregar cups manualmente en lugar de usar createTowerWithNCups
-        for (int i = 1; i <= 4; i++) {
-            t.pushCup(i);
-        }
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushCup(3);
+        t.pushCup(4);
 
         String[][] s = t.stackingItems();
-        int idx1 = -1, idx4 = -1;
-        for (int i = 0; i < s.length; i++) {
-            if (s[i][0].equals("cup") && s[i][1].equals("1")) idx1 = i;
-            if (s[i][0].equals("cup") && s[i][1].equals("4")) idx4 = i;
+        if (s.length != 4) {
+            System.out.println("ACCEPTANCE2 FAILED: se esperaban 4 elementos, obtuve " + s.length);
+            System.exit(2);
         }
-        if (idx1 == -1 || idx4 == -1) {
-            System.out.println("ACCEPTANCE2 FAILED: missing cups");
+
+        int origIdx1 = findIndex(s, "cup", "1");
+        int origIdx4 = findIndex(s, "cup", "4");
+        if (origIdx1 == -1 || origIdx4 == -1) {
+            System.out.println("ACCEPTANCE2 FAILED: faltan tazas antes del intercambio");
             System.exit(2);
         }
 
         t.swapItems("cup", 1, "cup", 4);
 
-        s = t.stackingItems();
-        int newIdx1 = -1, newIdx4 = -1;
-        for (int i = 0; i < s.length; i++) {
-            if (s[i][0].equals("cup") && s[i][1].equals("1")) newIdx1 = i;
-            if (s[i][0].equals("cup") && s[i][1].equals("4")) newIdx4 = i;
+        if (!t.ok()) {
+            System.out.println("ACCEPTANCE2 FAILED: el intercambio reportó error");
+            System.exit(2);
         }
 
-        if (newIdx1 > newIdx4) {
+        s = t.stackingItems();
+        int newIdx1 = findIndex(s, "cup", "1");
+        int newIdx4 = findIndex(s, "cup", "4");
+
+        if (newIdx1 == origIdx4 && newIdx4 == origIdx1) {
             System.out.println("ACCEPTANCE2 PASSED");
             System.exit(0);
         } else {
-            System.out.println("ACCEPTANCE2 FAILED");
+            System.out.println("ACCEPTANCE2 FAILED: posiciones no intercambiadas");
             System.exit(2);
         }
+    }
+
+    private static int findIndex(String[][] items, String type, String number) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i][0].equals(type) && items[i][1].equals(number)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
