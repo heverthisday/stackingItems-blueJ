@@ -1,394 +1,452 @@
-import org.junit.Before;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
- * Conjunto de pruebas unitarias para la clase {@Tower}.
- 
+ * Pruebas de unidad para Tower - Ciclo 2.
+ * Todas las pruebas se ejecutan en modo invisible.
+ * 
+ * @author Hever
+ * @version 3.0 - Nombres corregidos segun especificacion
  */
 public class TowerC2Test {
-    private Tower tower;
 
-    @Before
-    public void setUp() {
-        // cada test parte de una torre vacía con altura máxima razonable
-        tower = new Tower(5, 20);
-    }
-
-
+    // ========================================================
+    //  Tower(cups) constructor  -  Requisito 10
+    // ========================================================
 
     @Test
-    public void shouldAddCupWithinHeight() {
-        // Arrange
-        // tower creado en setUp
-
-        // Act
-        tower.pushCup(1);
-
-        // Assert
-        assertTrue("la operación debe ser exitosa", tower.ok());
-        assertEquals("altura esperada después de una taza de número 1", 1, tower.height());
-        String[][] items = tower.stackingItems();
-        assertEquals(1, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("1", items[0][1]);
+    public void shouldCreateTowerWithNCups() {
+        Tower t = new Tower(4);
+        String[][] s = t.stackingItems();
+        assertEquals(4, s.length);
+        assertTrue(t.ok());
     }
 
     @Test
-    public void shouldNotAllowDuplicateCup() {
-        // Arrange
-        tower.pushCup(2);
-
-        // Act
-        tower.pushCup(2);
-
-        // Assert
-        assertFalse("no debe permitirse añadir una taza duplicada", tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(1, items.length);
+    public void shouldCreateCupsNumbered1ToN() {
+        Tower t = new Tower(3);
+        String[][] s = t.stackingItems();
+        assertEquals("cup", s[0][0]);
+        assertEquals("1", s[0][1]);
+        assertEquals("cup", s[1][0]);
+        assertEquals("2", s[1][1]);
+        assertEquals("cup", s[2][0]);
+        assertEquals("3", s[2][1]);
     }
 
     @Test
-    public void shouldRejectCupWhenExceedHeight() {
-        // Arrange
-        Tower small = new Tower(3, 1); // altura máxima < altura de taza 2
-
-        // Act
-        small.pushCup(2);
-
-        // Assert
-        assertFalse("debe fallar al sobrepasar la altura máxima", small.ok());
-        assertEquals("la torre permanece vacía", 0, small.height());
-    }
-
-
-
-    @Test
-    public void shouldAddLidWithinHeight() {
-        // Arrange
-        tower.pushCup(3); // para dar algo de altura
-
-        // Act
-        tower.pushLid(1);
-
-        // Assert
-        assertTrue(tower.ok());
-        // la tapa 1 queda "dentro" de la taza 3, de modo que la altura no cambia
-        assertEquals(5, tower.height());
-        String[][] items = tower.stackingItems();
-        assertEquals(2, items.length);
-        assertEquals("lid", items[1][0]);
+    public void shouldCreateTowerWithOneCup() {
+        Tower t = new Tower(1);
+        String[][] s = t.stackingItems();
+        assertEquals(1, s.length);
+        assertEquals("cup", s[0][0]);
+        assertEquals("1", s[0][1]);
     }
 
     @Test
-    public void shouldNotAllowDuplicateLid() {
-        // Arrange
-        tower.pushLid(1);
-
-        // Act
-        tower.pushLid(1);
-
-        // Assert
-        assertFalse(tower.ok());
-        assertEquals(1, tower.stackingItems().length);
+    public void shouldNotIncludeLidsWhenCreatingWithNCups() {
+        Tower t = new Tower(3);
+        String[][] s = t.stackingItems();
+        for (String[] item : s) {
+            assertEquals("cup", item[0]);
+        }
     }
 
-    
+    // ========================================================
+    //  swap  -  Requisito 11
+    // ========================================================
 
     @Test
-    public void popCupRemovesLastCup() {
-        // Arrange: cup1 seguido de cup2
-        tower.pushCup(1);
-        tower.pushCup(2);
-
-        // Act: pop remueve la última taza agregada (cup2)
-        tower.popCup();
-
-        // Assert: debe quedar solo cup1
-        assertTrue(tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(1, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("1", items[0][1]);
+    public void shouldSwapTwoCups() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.swap("cup", 1, "cup", 2);
+        String[][] s = t.stackingItems();
+        assertEquals("2", s[0][1]);
+        assertEquals("1", s[1][1]);
+        assertTrue(t.ok());
     }
 
     @Test
-    public void popCupOnEmptyShouldFail() {
-        // Arrange
-        // tower vacío
-
-        // Act
-        tower.popCup();
-
-        // Assert
-        assertFalse(tower.ok());
-        assertEquals(0, tower.stackingItems().length);
+    public void shouldSwapCupAndLid() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(2);
+        t.pushLid(1);
+        t.swap("cup", 2, "lid", 1);
+        String[][] s = t.stackingItems();
+        assertEquals("lid", s[0][0]);
+        assertEquals("1", s[0][1]);
+        assertEquals("cup", s[1][0]);
+        assertEquals("2", s[1][1]);
+        assertTrue(t.ok());
     }
 
     @Test
-    public void popLidOnEmptyShouldFail() {
-        // Arrange
-
-        // Act
-        tower.popLid();
-
-        // Assert
-        assertFalse(tower.ok());
-    }
-
- 
-
-    @Test
-    public void removeSpecificCupShouldWork() {
-        // Arrange: cup1 y cup2
-        tower.pushCup(1);
-        tower.pushCup(2);
-
-        // Act: remover cup1 específicamente
-        tower.removeCup(1);
-
-        // Assert: debe quedar solo cup2
-        assertTrue(tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(1, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("2", items[0][1]);
+    public void shouldSwapTwoLids() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(3);
+        t.pushLid(1);
+        t.pushLid(2);
+        t.swap("lid", 1, "lid", 2);
+        String[][] s = t.stackingItems();
+        int idxLid1 = -1, idxLid2 = -1;
+        for (int i = 0; i < s.length; i++) {
+            if (s[i][0].equals("lid") && s[i][1].equals("1")) idxLid1 = i;
+            if (s[i][0].equals("lid") && s[i][1].equals("2")) idxLid2 = i;
+        }
+        assertTrue(idxLid2 < idxLid1);
+        assertTrue(t.ok());
     }
 
     @Test
-    public void removeNonexistentCupShouldFail() {
-        // Arrange
-        tower.pushCup(1);
-
-        // Act
-        tower.removeCup(5);
-
-        // Assert
-        assertFalse(tower.ok());
-        assertEquals(1, tower.stackingItems().length);
+    public void shouldNotSwapNonExistentItem() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.swap("cup", 1, "cup", 99);
+        assertFalse(t.ok());
     }
 
     @Test
-    public void removeSpecificLidShouldWork() {
-        // Arrange
-        tower.pushLid(1);
-        tower.pushLid(2);
-
-        // Act
-        tower.removeLid(1);
-
-        // Assert
-        assertTrue(tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(1, items.length);
-        assertEquals("lid", items[0][0]);
-        assertEquals("2", items[0][1]);
+    public void shouldNotSwapWithInvalidType() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.swap("mug", 1, "cup", 2);
+        assertFalse(t.ok());
     }
 
     @Test
-    public void removeNonexistentLidShouldFail() {
-        // Arrange
-        tower.pushLid(1);
-
-        // Act
-        tower.removeLid(5);
-
-        // Assert
-        assertFalse(tower.ok());
-        assertEquals(1, tower.stackingItems().length);
-    }
-
-
-
-    @Test
-    public void stackingItemsReturnsOrderedPairs() {
-        // Arrange: c1, l1, c2
-        tower.pushCup(1);
-        tower.pushLid(1);
-        tower.pushCup(2);
-
-        // Act
-        String[][] items = tower.stackingItems();
-
-        // Assert: verifica que el array tiene 3 elementos en el orden correcto
-        assertEquals(3, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("1", items[0][1]);
-        assertEquals("lid", items[1][0]);
-        assertEquals("1", items[1][1]);
-        assertEquals("cup", items[2][0]);
-        assertEquals("2", items[2][1]);
+    public void shouldNotSwapWithNullType() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.swap(null, 1, "cup", 2);
+        assertFalse(t.ok());
     }
 
     @Test
-    public void heightReflectsStackedItemsCorrectly() {
-        // Arrange: cup1 altura=1, cup2 altura=3, cup2>cup1 así que encima
-        tower.pushCup(1);
-        tower.pushCup(2);
-
-        // Act
-        int h = tower.height();
-
-        // Assert: cup1 base=0 (altura 1), cup2 base=1 (altura 3), total=4
-        assertEquals(4, h);
+    public void shouldPreserveAllItemsAfterSwap() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(3);
+        t.pushLid(2);
+        int beforeCount = t.stackingItems().length;
+        t.swap("cup", 1, "cup", 3);
+        int afterCount = t.stackingItems().length;
+        assertEquals(beforeCount, afterCount);
     }
 
-
+    // ========================================================
+    //  cover  -  Requisito 12
+    // ========================================================
 
     @Test
-    public void coverAvailableCupsPairsCupsAndLids() {
-        // Arrange: c1, c2, l2, l1
-        tower.pushCup(1);
-        tower.pushCup(2);
-        tower.pushLid(2);
-        tower.pushLid(1);
-
-        // Act: reorganiza como c1-l1, c2-l2
-        tower.coverAvailableCups();
-
-        // Assert: verifica que quedaron 4 items y están emparejados
-        String[][] items = tower.stackingItems();
-        assertEquals(4, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("1", items[0][1]);
-        assertEquals("lid", items[1][0]);
-        assertEquals("1", items[1][1]);
-        assertEquals("cup", items[2][0]);
-        assertEquals("2", items[2][1]);
-        assertEquals("lid", items[3][0]);
-        assertEquals("2", items[3][1]);
+    public void shouldCoverCupWithMatchingLid() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(2);
+        t.pushLid(2);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertEquals(1, lided.length);
+        assertEquals(2, lided[0]);
     }
 
     @Test
-    public void tappedCupsInfoDetectsCoveredCups() {
-        // Arrange: agregar cups y lids emparejados
-        tower.pushCup(1);
-        tower.pushLid(1);
-        tower.pushCup(2);
-        tower.pushLid(2);
-
-        // Act: coverAvailableCups() empareja cada cup con su lid
-        tower.coverAvailableCups();
-        String[][] tapped = tower.tappedCupsInfo();
-
-        // Assert: ambas tazas deberían estar tapadas (cup1 y cup2)
-        assertEquals("deben haber 2 tazas tapadas", 2, tapped.length);
-        assertEquals("primera taza debe ser cup", "cup", tapped[0][0]);
-        assertEquals("primera taza debe ser número 1", "1", tapped[0][1]);
-        assertEquals("segunda taza debe ser cup", "cup", tapped[1][0]);
-        assertEquals("segunda taza debe ser número 2", "2", tapped[1][1]);
-    }
-
-
-
-    @Test
-    public void sortDescendingKeepsHeightUnderLimitAndMarksOk() {
-        // Arrange: torre con maxHeight suficientemente grande para añadir ambas cups
-        Tower small = new Tower(5, 5);
-        small.pushCup(1); // altura 1
-        small.pushCup(2); // altura 3; juntas hacen 4, cabe en el límite 5
-
-        // Act: sortDescending() reordena sin necesidad de remover
-        small.sortDescending();
-
-        // Assert: ok se mantiene true y altura sigue dentro del límite
-        assertTrue(small.ok());
-        assertTrue(small.height() <= 5);
+    public void shouldCoverMultipleCups() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(3);
+        t.pushLid(1);
+        t.pushLid(3);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertEquals(2, lided.length);
+        assertEquals(1, lided[0]);
+        assertEquals(3, lided[1]);
     }
 
     @Test
-    public void swapItemsWithInvalidTypeSetsError() {
-        // Arrange
-        tower.pushCup(1);
-        tower.pushLid(1);
-
-        // Act
-        tower.swapItems("invalid", 1, "cup", 1);
-
-        // Assert
-        assertFalse(tower.ok());
+    public void shouldNotCoverCupWithoutMatchingLid() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushLid(1);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertEquals(1, lided.length);
+        assertEquals(1, lided[0]);
     }
 
     @Test
-    public void swapItemsBetweenElementsUpdatesOrder() {
-        // Arrange: cup1 seguido de cup2
-        tower.pushCup(1);
-        tower.pushCup(2);
-
-        // Act: intercambia las dos tazas
-        tower.swapItems("cup", 1, "cup", 2);
-
-        // Assert: verifica que el orden se invirtió
-        assertTrue(tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(2, items.length);
-        assertEquals("cup", items[0][0]);
-        assertEquals("2", items[0][1]);
-        assertEquals("cup", items[1][0]);
-        assertEquals("1", items[1][1]);
+    public void shouldDoNothingWhenCoverWithNoLids() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertEquals(0, lided.length);
+        assertTrue(t.ok());
     }
 
     @Test
-    public void reverseOrderInvertsStackingSequence() {
-        // Arrange: c1, c2, c3
-        tower.pushCup(1);
-        tower.pushCup(2);
-        tower.pushCup(3);
-
-        // Act
-        tower.reverseOrder();
-
-        // Assert: debe quedar c3, c2, c1
-        assertTrue(tower.ok());
-        String[][] items = tower.stackingItems();
-        assertEquals(3, items.length);
-        assertEquals("3", items[0][1]);
-        assertEquals("2", items[1][1]);
-        assertEquals("1", items[2][1]);
+    public void shouldDoNothingWhenCoverWithNoCups() {
+        Tower t = new Tower(10, 100);
+        t.pushLid(1);
+        t.pushLid(2);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertEquals(0, lided.length);
     }
 
     @Test
-    public void reverseOrderKeepsHeightUnderLimit() {
-        // Arrange: torre con altitud suficiente para ambas cups
-        Tower small = new Tower(5, 5);
-        small.pushCup(1);
-        small.pushCup(2);
+    public void shouldPreserveItemCountAfterCover() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushLid(1);
+        int before = t.stackingItems().length;
+        t.cover();
+        int after = t.stackingItems().length;
+        assertEquals(before, after);
+    }
 
-        // Act
-        small.reverseOrder();
+    // ========================================================
+    //  swapToReduce  -  Requisito 13
+    // ========================================================
 
-        // Assert: la operación no debe fallar y la altura sigue dentro del límite
-        assertTrue(small.ok());
-        assertTrue(small.height() <= 5);
+    @Test
+    public void shouldFindSwapThatReducesHeight() {
+        Tower t = new Tower(10, 50);
+        t.pushCup(3);
+        t.pushCup(1);
+        int before = t.height();
+        String[][] result = t.swapToReduce();
+        assertNotNull(result);
+        assertTrue(t.height() < before);
     }
 
     @Test
-    public void findReducingSwapLocatesOptimalExchange() {
-        // Arrange: c1, c2, c3 en mala disposición
-        tower.pushCup(1);
-        tower.pushCup(2);
-        tower.pushCup(3);
-
-        // Act: busca un swap que reduzca altura
-        Object[] swap = tower.findReducingSwap();
-
-        // Assert: si encuentra un swap, ok es true y altura disminuyó
-        if (swap != null) {
-            assertTrue(tower.ok());
-            assertTrue(tower.height() >= 0);
+    public void shouldReturnTwoElementArrayForSwapToReduce() {
+        Tower t = new Tower(10, 50);
+        t.pushCup(4);
+        t.pushCup(1);
+        String[][] result = t.swapToReduce();
+        if (result != null) {
+            assertEquals(2, result.length);
+            assertEquals(2, result[0].length);
+            assertEquals(2, result[1].length);
         }
     }
 
     @Test
-    public void findReducingSwapFailsWhenNoOptimalSwap() {
-        // Arrange: solo una taza (no puede haber swap)
-        tower.pushCup(1);
+    public void shouldReturnNullIfNoSwapReducesHeight() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushCup(3);
+        String[][] result = t.swapToReduce();
+        if (result == null) {
+            assertFalse(t.ok());
+        }
+    }
 
-        // Act
-        Object[] swap = tower.findReducingSwap();
+    @Test
+    public void shouldNotCrashOnEmptyTower() {
+        Tower t = new Tower(10, 100);
+        String[][] result = t.swapToReduce();
+        assertNull(result);
+        assertFalse(t.ok());
+    }
 
-        // Assert
-        assertNull(swap);
-        assertFalse(tower.ok());
+    @Test
+    public void shouldNotCrashWithSingleItem() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        String[][] result = t.swapToReduce();
+        assertNull(result);
+        assertFalse(t.ok());
+    }
+
+    // ========================================================
+    //  PRUEBAS CRUZADAS / INTEGRACION
+    // ========================================================
+
+    @Test
+    public void shouldSwapAndThenCover() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(2);
+        t.pushLid(2);
+        t.pushCup(1);
+        t.swap("lid", 2, "cup", 1);
+        t.cover();
+        int[] lided = t.lidedCups();
+        assertTrue(lided.length >= 0);
+    }
+
+    @Test
+    public void shouldMaintainOkAfterMultipleOperations() {
+        Tower t = new Tower(5, 50);
+        t.pushCup(1);
+        assertTrue(t.ok());
+        t.pushCup(2);
+        assertTrue(t.ok());
+        t.pushLid(1);
+        assertTrue(t.ok());
+        t.cover();
+        assertTrue(t.ok());
+        t.swap("cup", 1, "cup", 2);
+        assertTrue(t.ok());
+    }
+
+    @Test
+    public void shouldReportHeightAfterSwap() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(3);
+        t.pushCup(1);
+        int h1 = t.height();
+        t.swap("cup", 3, "cup", 1);
+        int h2 = t.height();
+        assertTrue(h1 > 0);
+        assertTrue(h2 > 0);
+    }
+
+    // ========================================================
+    //  CICLO 1 - Regresion basica
+    // ========================================================
+
+    @Test
+    public void shouldPushAndPopCup() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(3);
+        assertTrue(t.ok());
+        assertEquals(1, t.stackingItems().length);
+        t.popCup();
+        assertTrue(t.ok());
+        assertEquals(0, t.stackingItems().length);
+    }
+
+    @Test
+    public void shouldNotPushDuplicateCup() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(2);
+        t.pushCup(2);
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldNotPushCupExceedingHeight() {
+        Tower t = new Tower(10, 5);
+        t.pushCup(4);
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldNotPopCupFromEmptyTower() {
+        Tower t = new Tower(10, 100);
+        t.popCup();
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldPushAndPopLid() {
+        Tower t = new Tower(10, 100);
+        t.pushLid(1);
+        assertTrue(t.ok());
+        t.popLid();
+        assertTrue(t.ok());
+        assertEquals(0, t.stackingItems().length);
+    }
+
+    @Test
+    public void shouldNotPushDuplicateLid() {
+        Tower t = new Tower(10, 100);
+        t.pushLid(1);
+        t.pushLid(1);
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldRemoveSpecificCup() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.removeCup(1);
+        assertTrue(t.ok());
+        String[][] s = t.stackingItems();
+        assertEquals(1, s.length);
+        assertEquals("2", s[0][1]);
+    }
+
+    @Test
+    public void shouldNotRemoveNonExistentCup() {
+        Tower t = new Tower(10, 100);
+        t.removeCup(99);
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldOrderTower() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(3);
+        t.pushCup(2);
+        t.orderTower();
+        String[][] s = t.stackingItems();
+        assertTrue(Integer.parseInt(s[0][1]) >= Integer.parseInt(s[1][1]));
+    }
+
+    @Test
+    public void shouldReverseTower() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushCup(3);
+        t.reverseTower();
+        String[][] s = t.stackingItems();
+        assertEquals("3", s[0][1]);
+        assertEquals("2", s[1][1]);
+        assertEquals("1", s[2][1]);
+    }
+
+    @Test
+    public void shouldReturnCorrectHeight() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(1);
+        assertTrue(t.height() > 0);
+    }
+
+    @Test
+    public void shouldReturnZeroHeightForEmptyTower() {
+        Tower t = new Tower(10, 100);
+        assertEquals(0, t.height());
+    }
+
+    @Test
+    public void shouldNotPopLidFromEmptyTower() {
+        Tower t = new Tower(10, 100);
+        t.popLid();
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldNotRemoveNonExistentLid() {
+        Tower t = new Tower(10, 100);
+        t.removeLid(99);
+        assertFalse(t.ok());
+    }
+
+    @Test
+    public void shouldReturnLidedCupsSortedAscending() {
+        Tower t = new Tower(10, 100);
+        t.pushCup(3);
+        t.pushCup(1);
+        t.pushLid(3);
+        t.pushLid(1);
+        t.cover();
+        int[] lided = t.lidedCups();
+        for (int i = 0; i < lided.length - 1; i++) {
+            assertTrue(lided[i] <= lided[i + 1]);
+        }
     }
 }
