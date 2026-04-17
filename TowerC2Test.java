@@ -10,9 +10,6 @@ import org.junit.Test;
  */
 public class TowerC2Test {
 
-    // ========================================================
-    //  Tower(cups) constructor  -  Requisito 10
-    // ========================================================
 
     @Test
     public void shouldCreateTowerWithNCups() {
@@ -52,9 +49,7 @@ public class TowerC2Test {
         }
     }
 
-    // ========================================================
-    //  swap  -  Requisito 11
-    // ========================================================
+
 
     @Test
     public void shouldSwapTwoCups() {
@@ -137,9 +132,7 @@ public class TowerC2Test {
         assertEquals(beforeCount, afterCount);
     }
 
-    // ========================================================
-    //  cover  -  Requisito 12
-    // ========================================================
+  
 
     @Test
     public void shouldCoverCupWithMatchingLid() {
@@ -211,9 +204,7 @@ public class TowerC2Test {
         assertEquals(before, after);
     }
 
-    // ========================================================
-    //  swapToReduce  -  Requisito 13
-    // ========================================================
+
 
     @Test
     public void shouldFindSwapThatReducesHeight() {
@@ -268,9 +259,7 @@ public class TowerC2Test {
         assertFalse(t.ok());
     }
 
-    // ========================================================
-    //  PRUEBAS CRUZADAS / INTEGRACION
-    // ========================================================
+
 
     @Test
     public void shouldSwapAndThenCover() {
@@ -311,9 +300,7 @@ public class TowerC2Test {
         assertTrue(h2 > 0);
     }
 
-    // ========================================================
-    //  CICLO 1 - Regresion basica
-    // ========================================================
+
 
     @Test
     public void shouldPushAndPopCup() {
