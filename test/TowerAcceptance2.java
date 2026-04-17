@@ -1,11 +1,9 @@
+package test;
+
+import tower.Tower;
+
 /**
  * Prueba de aceptacion 2 - Swap de cups.
- * Verifica que al intercambiar cup 1 y cup 4,
- * sus posiciones se invierten correctamente.
- * Se ejecuta en modo invisible.
- * 
- * @author Hever
- * @version 2.0
  */
 public class TowerAcceptance2 {
     public static void main(String[] args) {
@@ -23,12 +21,13 @@ public class TowerAcceptance2 {
 
         int origIdx1 = findIndex(s, "cup", "1");
         int origIdx4 = findIndex(s, "cup", "4");
+        
         if (origIdx1 == -1 || origIdx4 == -1) {
             System.out.println("ACCEPTANCE2 FAILED: faltan tazas antes del intercambio");
             System.exit(2);
         }
 
-        t.swapItems("cup", 1, "cup", 4);
+        t.swap("cup", 1, "cup", 4);
 
         if (!t.ok()) {
             System.out.println("ACCEPTANCE2 FAILED: el intercambio reportó error");
@@ -43,16 +42,14 @@ public class TowerAcceptance2 {
             System.out.println("ACCEPTANCE2 PASSED");
             System.exit(0);
         } else {
-            System.out.println("ACCEPTANCE2 FAILED: posiciones no intercambiadas");
+            System.out.println("ACCEPTANCE2 FAILED: posiciones incorrectas tras intercambio");
             System.exit(2);
         }
     }
 
-    private static int findIndex(String[][] items, String type, String number) {
-        for (int i = 0; i < items.length; i++) {
-            if (items[i][0].equals(type) && items[i][1].equals(number)) {
-                return i;
-            }
+    private static int findIndex(String[][] s, String type, String num) {
+        for (int i = 0; i < s.length; i++) {
+            if (s[i][0].equals(type) && s[i][1].equals(num)) return i;
         }
         return -1;
     }

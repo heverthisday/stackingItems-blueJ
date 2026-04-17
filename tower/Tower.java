@@ -1,7 +1,10 @@
+package tower;
+import shapes.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.Collections;
 import java.util.Comparator;
+
 
 /**
  * Clase principal del simulador StackingItems.
@@ -283,6 +286,7 @@ public class Tower {
         redrawAll();
         ok = true;
     }
+        
 
     /**
      * Verifica si existe un item de cierto tipo y numero
@@ -505,26 +509,31 @@ public class Tower {
      * Si no hay tazas, marca error.
      */
     public void popCup() {
-        int idx = -1;
-        for (int i = items.size() - 1; i >= 0; i--) {
-            if (items.get(i).getType().equals("cup")) {
-                idx = i;
-                break;
+    int idx = -1;
+    for (int i = items.size() - 1; i >= 0; i--) {
+        if (items.get(i).getType().contains("cup")) { // Usamos contains para que detecte "opener" o "hierarchical"
+            idx = i;
+            break;
+        }
+    }
+    
+    if (idx != -1) {
+        Item itemToRemove = items.get(idx);
+        // PREGUNTA: ¿La taza permite ser borrada? (Regla de Hierarchical)
+        if (itemToRemove instanceof StakingItem) {
+            if (!((StakingItem) itemToRemove).canBeRemoved(this.items)) {
+                ok = false; // No se puede borrar, ponemos ok en false
+                return;
             }
         }
-        if (idx == -1) {
-            ok = false;
-            if (isVisible) {
-                JOptionPane.showMessageDialog(null, "Error: no hay tazas para eliminar");
-            } else {
-                System.out.println("Error: no hay tazas para eliminar");
-            }
-            return;
-        }
+        
         items.remove(idx);
         redrawAll();
         ok = true;
+    } else {
+        ok = false;
     }
+}
 
     /**
      * Elimina la ultima tapa agregada a la torre.
@@ -793,5 +802,106 @@ public class Tower {
             System.out.println("No se encontro intercambio que reduzca la altura");
         }
         return null;
+    }
+    /**
+         * SOBRECARGA: Nueva funcionalidad para insertar tazas especiales.
+         * Mantiene los originales quietos y delega la lógica a las subclases.
+         */
+        /**
+         * SOBRECARGA: Permite insertar tazas especiales (opener, hierarchical, gift).
+         */
+    public void pushCup(String type, int i) {
+            this.ok = true;
+            try {
+                // 1. Verificación de existencia
+                if (itemExists("cup", i)) {
+                    this.ok = false; 
+                    return;
+                }
+    
+                // 2. Definición de color inicial
+                String color = COLORS[i % COLORS.length];
+                Cup newCup;
+    
+                // 3. Selección de la lógica según el tipo (Adición de 'gift')
+                if (type.equals("opener")) {
+                    newCup = new OpenerCup(i, color);
+                } else if (type.equals("hierarchical")) {
+                    newCup = new HierarchicalCup(i, color);
+                } else if (type.equals("gift")) {
+                    // Creamos la taza de regalo (ella misma cambiará su número y color al entrar)
+                    newCup = new GiftCup(i, color);
+                } else {
+                    // Si el tipo no coincide, usamos tu método original para tazas normales
+                    pushCup(i); 
+                    return;
+                }
+    
+                // 4. Agregar a la lista de la torre
+                items.add(newCup);
+                
+                // 5. Ejecución de habilidad especial
+                // Opener -> Borra tapas | Hierarchical -> Se hunde | Gift -> Revela sorpresa
+                newCup.processEntry(this.items);
+    
+                // 6. Actualización visual
+                if (isVisible) {
+                    redrawAll();
+                }
+                
+            } catch (Exception e) {
+                this.ok = false;
+            }
+        }
+    /**
+     * SOBRECARGA: Permite insertar tapas especiales (fearful, crazy).
+     * El método pushLid(int i) original sigue funcionando para tapas normales.
+     */
+    public void pushLid(String type, int i) {
+        this.ok = true;
+        try {
+            // 1. Verificamos si ya existe una tapa con ese número
+            if (itemExists("lid", i)) {
+                this.ok = false; 
+                return;
+            }
+
+            // 2. Definimos el color según el índice
+            String color = COLORS[i % COLORS.length];
+            Lid newLid;
+
+            // 3. Creamos la instancia según el tipo solicitado
+            if (type.equals("fearful")) {
+                newLid = new FearfulLid(i, color);
+            } else if (type.equals("crazy")) {
+                newLid = new CrazyLid(i, color);
+            } else {
+                // Si el tipo es "normal" o cualquier otro, usamos el método base
+                pushLid(i); 
+                return;
+            }
+
+            // 4. VALIDACIÓN DE ENTRADA (Clave para la FearfulLid)
+            // Ella revisará si la taza de abajo es muy grande y devolverá false si tiene miedo.
+            if (newLid.canBeAdded(this.items)) {
+                
+                this.items.add(newLid);
+                
+                // 5. ACCIÓN DE ENTRADA (Clave para la CrazyLid)
+                // Si es la loca, aquí es donde dispara el cambio de colores.
+                newLid.processEntry(this.items);
+                
+                // 6. Refrescamos el dibujo
+                if (isVisible) {
+                    redrawAll();
+                }
+            } else {
+                // Si canBeAdded devuelve false (la miedosa no quiso entrar)
+                this.ok = false;
+            }
+            
+        } catch (Exception e) {
+            this.ok = false;
+        }
     }
 }
