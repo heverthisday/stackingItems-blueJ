@@ -39,7 +39,7 @@ Tenemos una Cobertura del 63% pero eso es sobre toda la carpeta Tower y los requ
 
 Cobertura dentro de Tower:
 
-![image alt]()
+![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/92a5845f1826fe137b7eb921dec7b19a38e35c5c/coverageTower.png)
 
 ## Interpretacion de columnas en el reporte de cobertura JaCoCo
 
