@@ -65,7 +65,5 @@ Nos vamos a enfocar en la clase Tower, tenemos un cubrimeinto real del dominio d
 
   Para mejorar las medidas se impelemtaron (**varios**) nuevos test en la clase TowerC2Test y en TowerAccetptance2 que se pueden ver en diferentes commits tales como "", "", ""
 
-  ![image alt]([resultado.jpeg](https://github.com/heverthisday/stackingItems-blueJ/blob/cc3191c7dff188a89b1446380484f0ccfec02bd6/coverageFinal.png))
-  
 
 ## Analisis Estatico
