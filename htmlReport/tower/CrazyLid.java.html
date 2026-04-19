@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CrazyLid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">tower</a> &gt; <span class="el_source">CrazyLid.java</span></div><h1>CrazyLid.java</h1><pre class="source lang-java linenums">package tower;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class CrazyLid extends Lid {
+    public CrazyLid(int number, String color) {
+<span class="fc" id="L7">        super(number, color);</span>
+<span class="fc" id="L8">    }</span>
+
+    @Override
+    public void processEntry(ArrayList&lt;Item&gt; items) {
+<span class="fc" id="L12">        String[] colors = {&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;yellow&quot;, &quot;orange&quot;, &quot;black&quot;, &quot;pink&quot;};</span>
+<span class="fc" id="L13">        Random rand = new Random();</span>
+        
+        // Cambia el color de todos los que ya estaban
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        for (Item item : items) {</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">            if (item != this) { // No se cambia a sí misma</span>
+<span class="fc" id="L18">                String randomColor = colors[rand.nextInt(colors.length)];</span>
+<span class="fc" id="L19">                item.changeColor(randomColor); </span>
+            }
+<span class="fc" id="L21">        }</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+<span class="nc" id="L25">    public String getType() { return &quot;crazy&quot;; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

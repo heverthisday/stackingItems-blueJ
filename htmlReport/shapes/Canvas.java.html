@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Canvas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">shapes</a> &gt; <span class="el_source">Canvas.java</span></div><h1>Canvas.java</h1><pre class="source lang-java linenums">package shapes;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+
+/**
+ * Canvas is a class to allow for simple graphical drawing on a canvas.
+ * Supports headless mode for JUnit testing environments.
+ *
+ * @author: Bruce Quig, Michael Kolling (mik)
+ * @version: 1.7 (headless support)
+ */
+public class Canvas {
+    private static Canvas canvasSingleton;
+
+    /**
+     * Factory method. Returns a no-op canvas in headless mode (JUnit).
+     */
+    public static Canvas getCanvas() {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (canvasSingleton == null) {</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">            if (GraphicsEnvironment.isHeadless()) {</span>
+<span class="nc" id="L24">                canvasSingleton = new Canvas(true);</span>
+            } else {
+<span class="fc" id="L26">                canvasSingleton = new Canvas(&quot;BlueJ Shapes Demo&quot;, 300, 300, Color.white);</span>
+<span class="fc" id="L27">                canvasSingleton.setVisible(true);</span>
+            }
+        }
+<span class="fc" id="L30">        return canvasSingleton;</span>
+    }
+
+    private final boolean headless;
+    private JFrame frame;
+    private CanvasPane canvas;
+    private Graphics2D graphic;
+    private Color backgroundColour;
+    private Image canvasImage;
+    private List&lt;Object&gt; objects;
+    private HashMap&lt;Object, ShapeDescription&gt; shapes;
+
+<span class="fc" id="L42">    private Canvas(String title, int width, int height, Color bgColor) {</span>
+<span class="fc" id="L43">        headless = false;</span>
+<span class="fc" id="L44">        frame = new JFrame();</span>
+<span class="fc" id="L45">        canvas = new CanvasPane();</span>
+<span class="fc" id="L46">        frame.setContentPane(canvas);</span>
+<span class="fc" id="L47">        frame.setTitle(title);</span>
+<span class="fc" id="L48">        canvas.setPreferredSize(new Dimension(width, height));</span>
+<span class="fc" id="L49">        backgroundColour = bgColor;</span>
+<span class="fc" id="L50">        frame.pack();</span>
+<span class="fc" id="L51">        objects = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">        shapes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L53">    }</span>
+
+<span class="nc" id="L55">    private Canvas(boolean headless) {</span>
+<span class="nc" id="L56">        this.headless = headless;</span>
+<span class="nc" id="L57">        objects = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L58">        shapes = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L59">    }</span>
+
+    public void setVisible(boolean visible) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (headless) return;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (graphic == null) {</span>
+<span class="fc" id="L64">            Dimension size = canvas.getSize();</span>
+<span class="fc" id="L65">            canvasImage = canvas.createImage(size.width, size.height);</span>
+<span class="fc" id="L66">            graphic = (Graphics2D) canvasImage.getGraphics();</span>
+<span class="fc" id="L67">            graphic.setColor(backgroundColour);</span>
+<span class="fc" id="L68">            graphic.fillRect(0, 0, size.width, size.height);</span>
+<span class="fc" id="L69">            graphic.setColor(Color.black);</span>
+        }
+<span class="fc" id="L71">        frame.setVisible(visible);</span>
+<span class="fc" id="L72">    }</span>
+
+    public void draw(Object referenceObject, String color, java.awt.Shape shape) {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (headless) return;</span>
+<span class="nc" id="L76">        objects.remove(referenceObject);</span>
+<span class="nc" id="L77">        objects.add(referenceObject);</span>
+<span class="nc" id="L78">        shapes.put(referenceObject, new ShapeDescription(shape, color));</span>
+<span class="nc" id="L79">        redraw();</span>
+<span class="nc" id="L80">    }</span>
+
+    public void erase(Object referenceObject) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (headless) return;</span>
+<span class="nc" id="L84">        objects.remove(referenceObject);</span>
+<span class="nc" id="L85">        shapes.remove(referenceObject);</span>
+<span class="nc" id="L86">        redraw();</span>
+<span class="nc" id="L87">    }</span>
+
+    public void eraseAll() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (headless) return;</span>
+<span class="nc" id="L91">        erase();</span>
+<span class="nc" id="L92">        canvas.repaint();</span>
+<span class="nc" id="L93">    }</span>
+
+    public void setForegroundColor(String colorString) {
+<span class="nc bnc" id="L96" title="All 4 branches missed.">        if (headless || graphic == null) return;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (colorString.equals(&quot;red&quot;))          graphic.setColor(Color.red);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        else if (colorString.equals(&quot;black&quot;))   graphic.setColor(Color.black);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        else if (colorString.equals(&quot;blue&quot;))    graphic.setColor(Color.blue);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        else if (colorString.equals(&quot;yellow&quot;))  graphic.setColor(Color.yellow);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        else if (colorString.equals(&quot;green&quot;))   graphic.setColor(Color.green);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        else if (colorString.equals(&quot;magenta&quot;)) graphic.setColor(Color.magenta);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        else if (colorString.equals(&quot;white&quot;))   graphic.setColor(Color.white);</span>
+<span class="nc" id="L104">        else                                    graphic.setColor(Color.black);</span>
+<span class="nc" id="L105">    }</span>
+
+    public void wait(int milliseconds) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (headless) return;</span>
+<span class="nc" id="L109">        try { Thread.sleep(milliseconds); } catch (Exception e) { /* ignorar */ }</span>
+<span class="nc" id="L110">    }</span>
+
+    private void redraw() {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (headless) return;</span>
+<span class="nc" id="L114">        erase();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (Object shape : objects) shapes.get(shape).draw(graphic);</span>
+<span class="nc" id="L116">        canvas.repaint();</span>
+<span class="nc" id="L117">    }</span>
+
+    private void erase() {
+<span class="nc bnc" id="L120" title="All 4 branches missed.">        if (headless || graphic == null) return;</span>
+<span class="nc" id="L121">        Color original = graphic.getColor();</span>
+<span class="nc" id="L122">        graphic.setColor(backgroundColour);</span>
+<span class="nc" id="L123">        Dimension size = canvas.getSize();</span>
+<span class="nc" id="L124">        graphic.fill(new java.awt.Rectangle(0, 0, size.width, size.height));</span>
+<span class="nc" id="L125">        graphic.setColor(original);</span>
+<span class="nc" id="L126">    }</span>
+
+<span class="fc" id="L128">    private class CanvasPane extends JPanel {</span>
+<span class="fc" id="L129">        public void paint(Graphics g) { g.drawImage(canvasImage, 0, 0, null); }</span>
+    }
+
+    private class ShapeDescription {
+        private java.awt.Shape shape;
+        private String colorString;
+<span class="nc" id="L135">        public ShapeDescription(java.awt.Shape shape, String color) {</span>
+<span class="nc" id="L136">            this.shape = shape; this.colorString = color;</span>
+<span class="nc" id="L137">        }</span>
+        public void draw(Graphics2D graphic) {
+<span class="nc" id="L139">            setForegroundColor(colorString);</span>
+<span class="nc" id="L140">            graphic.fill(shape);</span>
+<span class="nc" id="L141">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

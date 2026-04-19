@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StakingItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">tower</a> &gt; <span class="el_source">StakingItem.java</span></div><h1>StakingItem.java</h1><pre class="source lang-java linenums">package tower;
+import java.util.ArrayList;
+import shapes.Rectangle;
+
+public abstract class StakingItem implements Item {
+    protected int number;
+    protected int height;
+    protected String color;
+    protected Rectangle body;
+
+<span class="fc" id="L11">    public StakingItem(int number, String color) {</span>
+<span class="fc" id="L12">        this.number = number;</span>
+<span class="fc" id="L13">        this.color = color;</span>
+<span class="fc" id="L14">        this.body = new Rectangle();</span>
+<span class="fc" id="L15">    }</span>
+
+<span class="fc" id="L17">    public int getHeight() { return height; }</span>
+<span class="fc" id="L18">    public int getNumber() { return number; }</span>
+<span class="nc" id="L19">    public String getColor() { return color; }</span>
+
+<span class="nc" id="L21">    public void makeVisible() { body.makeVisible(); }</span>
+<span class="fc" id="L22">    public void makeInvisible() { body.makeInvisible(); }</span>
+
+    public void redraw(int height, int width, int x, int y, String color) {
+<span class="nc" id="L25">        body.makeInvisible();</span>
+<span class="nc" id="L26">        body = new Rectangle();</span>
+<span class="nc" id="L27">        body.changeSize(height, width);</span>
+<span class="nc" id="L28">        body.moveHorizontal(x);</span>
+<span class="nc" id="L29">        body.moveVertical(y);</span>
+<span class="nc" id="L30">        body.changeColor(color);</span>
+<span class="nc" id="L31">        body.makeVisible();</span>
+<span class="nc" id="L32">    }</span>
+    /**
+     * Define qué sucede cuando este ítem entra a la torre.
+     * @param items La lista actual de la torre para que el ítem interactúe con ella.
+     */
+    public void processEntry(ArrayList&lt;Item&gt; items) {
+        // Por defecto no hace nada extra
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Indica si el ítem permite ser removido de la torre.
+     */
+    public boolean canBeRemoved(ArrayList&lt;Item&gt; items) {
+<span class="fc" id="L45">        return true; // Por defecto todos se pueden quitar</span>
+    }
+    /**
+     * Indica si el ítem permite ser añadido a la torre dada su situación actual.
+     * @param items La lista actual de la torre.
+     * @return true si se puede añadir, false de lo contrario.
+     */
+    public boolean canBeAdded(ArrayList&lt;Item&gt; items) {
+<span class="fc" id="L53">        return true; // Por defecto, todos los ítems permiten ser añadidos</span>
+    }
+    
+    // También asegúrate de tener este para la CrazyLid
+    public void changeColor(String newColor) {
+<span class="fc" id="L58">        this.color = newColor;</span>
+<span class="fc" id="L59">        body.changeColor(newColor);</span>
+<span class="fc" id="L60">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

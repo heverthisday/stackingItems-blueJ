@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Shape.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">shapes</a> &gt; <span class="el_source">Shape.java</span></div><h1>Shape.java</h1><pre class="source lang-java linenums">package shapes;
+
+import java.awt.geom.*;
+
+public abstract class Shape {
+    protected int xPosition;
+    protected int yPosition;
+    protected String color;
+    protected boolean isVisible;
+
+<span class="fc" id="L11">    public Shape(int x, int y, String color) {</span>
+<span class="fc" id="L12">        this.xPosition = x;</span>
+<span class="fc" id="L13">        this.yPosition = y;</span>
+<span class="fc" id="L14">        this.color = color;</span>
+<span class="fc" id="L15">        this.isVisible = false;</span>
+<span class="fc" id="L16">    }</span>
+
+    public void makeVisible() {
+<span class="nc" id="L19">        isVisible = true;</span>
+<span class="nc" id="L20">        draw();</span>
+<span class="nc" id="L21">    }</span>
+
+    public void makeInvisible() {
+<span class="fc" id="L24">        erase();</span>
+<span class="fc" id="L25">        isVisible = false;</span>
+<span class="fc" id="L26">    }</span>
+
+    public void moveRight() {
+<span class="nc" id="L29">        moveHorizontal(20);</span>
+<span class="nc" id="L30">    }</span>
+
+    public void moveLeft() {
+<span class="nc" id="L33">        moveHorizontal(-20);</span>
+<span class="nc" id="L34">    }</span>
+
+    public void moveUp() {
+<span class="nc" id="L37">        moveVertical(-20);</span>
+<span class="nc" id="L38">    }</span>
+
+    public void moveDown() {
+<span class="nc" id="L41">        moveVertical(20);</span>
+<span class="nc" id="L42">    }</span>
+
+    public void moveHorizontal(int distance) {
+<span class="fc" id="L45">        erase();</span>
+<span class="fc" id="L46">        xPosition += distance;</span>
+<span class="fc" id="L47">        draw();</span>
+<span class="fc" id="L48">    }</span>
+
+    public void moveVertical(int distance) {
+<span class="fc" id="L51">        erase();</span>
+<span class="fc" id="L52">        yPosition += distance;</span>
+<span class="fc" id="L53">        draw();</span>
+<span class="fc" id="L54">    }</span>
+
+    public void slowMoveHorizontal(int distance) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        int delta = (distance &lt; 0) ? -1 : 1;</span>
+<span class="nc" id="L58">        distance = Math.abs(distance);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for (int i = 0; i &lt; distance; i++) {</span>
+<span class="nc" id="L60">            xPosition += delta;</span>
+<span class="nc" id="L61">            draw();</span>
+        }
+<span class="nc" id="L63">    }</span>
+
+    public void slowMoveVertical(int distance) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        int delta = (distance &lt; 0) ? -1 : 1;</span>
+<span class="nc" id="L67">        distance = Math.abs(distance);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for (int i = 0; i &lt; distance; i++) {</span>
+<span class="nc" id="L69">            yPosition += delta;</span>
+<span class="nc" id="L70">            draw();</span>
+        }
+<span class="nc" id="L72">    }</span>
+
+    public void changeColor(String newColor) {
+<span class="fc" id="L75">        color = newColor;</span>
+<span class="fc" id="L76">        draw();</span>
+<span class="fc" id="L77">    }</span>
+
+    protected abstract void draw();
+    protected abstract void erase();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

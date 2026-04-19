@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HierarchicalCup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">tower</a> &gt; <span class="el_source">HierarchicalCup.java</span></div><h1>HierarchicalCup.java</h1><pre class="source lang-java linenums">package tower;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class HierarchicalCup extends Cup {
+
+    public HierarchicalCup(int number, String color) {
+<span class="fc" id="L9">        super(number, color);</span>
+<span class="fc" id="L10">    }</span>
+
+    @Override
+    public void processEntry(ArrayList&lt;Item&gt; items) {
+        // 1. Buscamos dónde estamos parados ahora (al final de la lista)
+<span class="fc" id="L15">        int miPosicion = items.indexOf(this);</span>
+        
+        // 2. Mientras no estemos en el suelo...
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        while (miPosicion &gt; 0) {</span>
+<span class="fc" id="L19">            Item elDeAbajo = items.get(miPosicion - 1);</span>
+            
+            // 3. Si soy más grande que el de abajo, me hundo
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">            if (this.getNumber() &gt; elDeAbajo.getNumber()) {</span>
+<span class="fc" id="L23">                Collections.swap(items, miPosicion, miPosicion - 1);</span>
+<span class="fc" id="L24">                miPosicion--; // Mi nuevo índice es uno menos</span>
+            } else {
+                // Si el de abajo es igual o más grande, paramos
+                break;
+            }
+<span class="fc" id="L29">        }</span>
+<span class="fc" id="L30">    }</span>
+
+    @Override
+    public boolean canBeRemoved(ArrayList&lt;Item&gt; items) {
+        // Si mi índice es 0, devuelvo FALSE (no me pueden quitar)
+        // Si mi índice es cualquier otro, devuelvo TRUE
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        return items.indexOf(this) != 0;</span>
+    }
+
+    @Override
+    public String getType() {
+<span class="nc" id="L41">        return &quot;hierarchical&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerContestCTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerContestCTest.java</span></div><h1>TowerContestCTest.java</h1><pre class="source lang-java linenums">package test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import tower.TowerContest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Prueba de aceptación Ciclo 3 — TowerContest.solve().
+ * Convertida de main() a JUnit 5.
+ */
+<span class="fc" id="L14">public class TowerContestCTest {</span>
+
+    // --- Casos válidos ---
+
+    @Test
+    void shouldSolveMinHeightFor4Cups() {
+        // altura mínima para n=4 es 2*4-1 = 7
+<span class="fc" id="L21">        String result = TowerContest.solve(4, 7);</span>
+<span class="fc" id="L22">        assertNotNull(result);</span>
+<span class="fc" id="L23">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L24">    }</span>
+
+    @Test
+    void shouldSolveMaxHeightFor4Cups() {
+        // altura máxima para n=4 es 4*4 = 16
+<span class="fc" id="L29">        String result = TowerContest.solve(4, 16);</span>
+<span class="fc" id="L30">        assertNotNull(result);</span>
+<span class="fc" id="L31">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L32">    }</span>
+
+    @Test
+    void shouldSolveFor4CupsHeight12() {
+<span class="fc" id="L36">        String result = TowerContest.solve(4, 12);</span>
+<span class="fc" id="L37">        assertNotNull(result);</span>
+<span class="fc" id="L38">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L39">    }</span>
+
+    @Test
+    void shouldSolveFor3CupsMinHeight() {
+        // mínimo para n=3 es 5
+<span class="fc" id="L44">        String result = TowerContest.solve(3, 5);</span>
+<span class="fc" id="L45">        assertNotNull(result);</span>
+<span class="fc" id="L46">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L47">    }</span>
+
+    @ParameterizedTest(name = &quot;n={0}, h={1} debe ser posible&quot;)
+    @CsvSource({
+            &quot;1, 1&quot;,
+            &quot;2, 3&quot;,
+            &quot;2, 4&quot;,
+            &quot;3, 5&quot;,
+            &quot;3, 9&quot;,
+            &quot;4, 7&quot;,
+            &quot;4, 12&quot;,
+            &quot;4, 16&quot;,
+            &quot;5, 9&quot;,
+            &quot;5, 25&quot;
+    })
+    void shouldSolveValidCases(int n, int h) {
+<span class="fc" id="L63">        String result = TowerContest.solve(n, h);</span>
+<span class="fc" id="L64">        assertNotNull(result);</span>
+<span class="fc" id="L65">        assertNotEquals(&quot;impossible&quot;, result,</span>
+                &quot;Se esperaba solución para n=&quot; + n + &quot;, h=&quot; + h);
+<span class="fc" id="L67">    }</span>
+
+    // --- Casos imposibles ---
+
+    @Test
+    void shouldReturnImpossibleWhenHeightTooLow() {
+        // Para n=4, h=6 &lt; mínimo (7)
+<span class="fc" id="L74">        String result = TowerContest.solve(4, 6);</span>
+<span class="fc" id="L75">        assertEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L76">    }</span>
+
+    @Test
+    void shouldReturnImpossibleWhenHeightTooHigh() {
+        // Para n=4, h=17 &gt; máximo (16)
+<span class="fc" id="L81">        String result = TowerContest.solve(4, 17);</span>
+<span class="fc" id="L82">        assertEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L83">    }</span>
+
+    @ParameterizedTest(name = &quot;n={0}, h={1} debe ser imposible&quot;)
+    @CsvSource({
+            &quot;3, 4&quot;,   // menor al mínimo
+            &quot;3, 10&quot;,  // mayor al máximo
+            &quot;4, 6&quot;,
+            &quot;4, 17&quot;,
+            &quot;5, 8&quot;    // menor al mínimo de 5 tazas (9)
+    })
+    void shouldReturnImpossibleForInvalidCases(int n, int h) {
+<span class="fc" id="L94">        String result = TowerContest.solve(n, h);</span>
+<span class="fc" id="L95">        assertEquals(&quot;impossible&quot;, result,</span>
+                &quot;Se esperaba 'impossible' para n=&quot; + n + &quot;, h=&quot; + h);
+<span class="fc" id="L97">    }</span>
+
+    // --- Verificación de formato del resultado ---
+
+    @Test
+    void resultShouldContainNHeights() {
+<span class="fc" id="L103">        int n = 4;</span>
+<span class="fc" id="L104">        String result = TowerContest.solve(n, 12);</span>
+<span class="fc" id="L105">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L106">        String[] parts = result.split(&quot; &quot;);</span>
+<span class="fc" id="L107">        assertEquals(n, parts.length,</span>
+                &quot;El resultado debe tener exactamente &quot; + n + &quot; alturas&quot;);
+<span class="fc" id="L109">    }</span>
+
+    @Test
+    void resultHeightsShouldBeOddNumbers() {
+<span class="fc" id="L113">        String result = TowerContest.solve(3, 5);</span>
+<span class="fc" id="L114">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (String part : result.split(&quot; &quot;)) {</span>
+<span class="fc" id="L116">            int h = Integer.parseInt(part);</span>
+<span class="fc" id="L117">            assertEquals(1, h % 2, &quot;Cada altura debe ser impar, pero encontré: &quot; + h);</span>
+        }
+<span class="fc" id="L119">    }</span>
+
+    @Test
+    void resultHeightsSumShouldMatchTarget() {
+<span class="fc" id="L123">        int n = 4, target = 12;</span>
+<span class="fc" id="L124">        String result = TowerContest.solve(n, target);</span>
+<span class="fc" id="L125">        assertNotEquals(&quot;impossible&quot;, result);</span>
+<span class="fc" id="L126">        int sum = 0;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        for (String part : result.split(&quot; &quot;)) sum += Integer.parseInt(part);</span>
+<span class="nc" id="L128">        assertEquals(target, sum,</span>
+                &quot;La suma de alturas debe ser &quot; + target + &quot; pero fue &quot; + sum);
+<span class="nc" id="L130">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

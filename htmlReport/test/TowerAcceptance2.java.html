@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerAcceptance2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerAcceptance2.java</span></div><h1>TowerAcceptance2.java</h1><pre class="source lang-java linenums">package test;
+
+import org.junit.jupiter.api.Test;
+import tower.Tower;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Prueba de aceptación 2 — Swap de cups.
+ * Convertida de main() a JUnit 5.
+ */
+<span class="fc" id="L12">public class TowerAcceptance2 {</span>
+
+    @Test
+    void acceptance2_swapCupsExchangesPositions() {
+<span class="fc" id="L16">        Tower t = new Tower(5, 20);</span>
+<span class="fc" id="L17">        t.pushCup(1);</span>
+<span class="fc" id="L18">        t.pushCup(2);</span>
+<span class="fc" id="L19">        t.pushCup(3);</span>
+<span class="fc" id="L20">        t.pushCup(4);</span>
+
+<span class="fc" id="L22">        String[][] before = t.stackingItems();</span>
+<span class="fc" id="L23">        assertEquals(4, before.length, &quot;Se esperaban 4 elementos antes del swap&quot;);</span>
+
+<span class="fc" id="L25">        int origIdx1 = findIndex(before, &quot;cup&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L26">        int origIdx4 = findIndex(before, &quot;cup&quot;, &quot;4&quot;);</span>
+<span class="fc" id="L27">        assertNotEquals(-1, origIdx1, &quot;Cup 1 no encontrada antes del swap&quot;);</span>
+<span class="fc" id="L28">        assertNotEquals(-1, origIdx4, &quot;Cup 4 no encontrada antes del swap&quot;);</span>
+
+<span class="fc" id="L30">        t.swap(&quot;cup&quot;, 1, &quot;cup&quot;, 4);</span>
+<span class="fc" id="L31">        assertTrue(t.ok(), &quot;El swap reportó error&quot;);</span>
+
+<span class="fc" id="L33">        String[][] after = t.stackingItems();</span>
+<span class="fc" id="L34">        int newIdx1 = findIndex(after, &quot;cup&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L35">        int newIdx4 = findIndex(after, &quot;cup&quot;, &quot;4&quot;);</span>
+
+<span class="fc" id="L37">        assertEquals(origIdx4, newIdx1, &quot;Cup 1 debería estar en la posición de Cup 4&quot;);</span>
+<span class="fc" id="L38">        assertEquals(origIdx1, newIdx4, &quot;Cup 4 debería estar en la posición de Cup 1&quot;);</span>
+<span class="fc" id="L39">    }</span>
+
+    @Test
+    void acceptance2_swapLidsExchangesPositions() {
+<span class="fc" id="L43">        Tower t = new Tower(5, 20);</span>
+<span class="fc" id="L44">        t.pushCup(1);</span>
+<span class="fc" id="L45">        t.pushCup(2);</span>
+<span class="fc" id="L46">        t.pushLid(1);</span>
+<span class="fc" id="L47">        t.pushLid(2);</span>
+
+<span class="fc" id="L49">        String[][] before = t.stackingItems();</span>
+<span class="fc" id="L50">        int origIdxL1 = findIndex(before, &quot;lid&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L51">        int origIdxL2 = findIndex(before, &quot;lid&quot;, &quot;2&quot;);</span>
+<span class="fc" id="L52">        assertNotEquals(-1, origIdxL1);</span>
+<span class="fc" id="L53">        assertNotEquals(-1, origIdxL2);</span>
+
+<span class="fc" id="L55">        t.swap(&quot;lid&quot;, 1, &quot;lid&quot;, 2);</span>
+<span class="fc" id="L56">        assertTrue(t.ok());</span>
+
+<span class="fc" id="L58">        String[][] after = t.stackingItems();</span>
+<span class="fc" id="L59">        assertEquals(origIdxL2, findIndex(after, &quot;lid&quot;, &quot;1&quot;));</span>
+<span class="fc" id="L60">        assertEquals(origIdxL1, findIndex(after, &quot;lid&quot;, &quot;2&quot;));</span>
+<span class="fc" id="L61">    }</span>
+
+    @Test
+    void acceptance2_swapCupAndLid() {
+<span class="fc" id="L65">        Tower t = new Tower(5, 20);</span>
+<span class="fc" id="L66">        t.pushCup(2);</span>
+<span class="fc" id="L67">        t.pushLid(2);</span>
+
+<span class="fc" id="L69">        t.swap(&quot;cup&quot;, 2, &quot;lid&quot;, 2);</span>
+<span class="fc" id="L70">        assertTrue(t.ok());</span>
+<span class="fc" id="L71">        assertEquals(2, t.stackingItems().length);</span>
+<span class="fc" id="L72">    }</span>
+
+    private int findIndex(String[][] s, String type, String num) {
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        for (int i = 0; i &lt; s.length; i++) {</span>
+<span class="fc bfc" id="L76" title="All 4 branches covered.">            if (s[i][0].equals(type) &amp;&amp; s[i][1].equals(num)) return i;</span>
+        }
+<span class="nc" id="L78">        return -1;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
