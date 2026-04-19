@@ -65,5 +65,8 @@ Nos vamos a enfocar en la clase Tower, tenemos un cubrimeinto real del dominio d
 
   Para mejorar las medidas se impelemtaron (**varios**) nuevos test en la clase TowerC2Test y en TowerAccetptance2 que se pueden ver en diferentes commits tales como "", "", ""
 
+  ![image alt](resultado.jpeg)
+  
+
 
 ## Analisis Estatico
