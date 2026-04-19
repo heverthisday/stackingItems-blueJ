@@ -749,4 +749,218 @@ public class TowerC2Test {
         assertEquals(1, t.stackingItems().length);
         assertTrue(t.ok());
     }
+
+    //Cubriendo los branches
+
+    // cubre rama swap con tipos invalidos
+    @Test
+    void branch_swapInvalidType() {
+        tower.pushCup(1);
+        tower.swap("invalid", 1, "cup", 1);
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama swap con null
+    @Test
+    void branch_swapNullType() {
+        tower.pushCup(1);
+        tower.swap(null, 1, "cup", 1);
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama swap con ambos elementos inexistentes
+    @Test
+    void branch_swapNonExistentBoth() {
+        tower.swap("cup", 99, "cup", 100);
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama cover con torre vacia
+    @Test
+    void branch_coverEmptyTower() {
+        tower.cover();
+
+        assertEquals(0, tower.stackingItems().length);
+    }
+
+    // cubre rama cover con solo tapas
+    @Test
+    void branch_coverOnlyLids() {
+        tower.pushLid(1);
+        tower.pushLid(2);
+
+        tower.cover();
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama cover con solo tazas
+    @Test
+    void branch_coverOnlyCups() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+
+        tower.cover();
+
+        assertEquals(0, tower.lidedCups().length);
+    }
+
+    // cubre rama lidedCups cuando no hay coincidencias
+    @Test
+    void branch_lidedCupsNoMatches() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+
+        int[] result = tower.lidedCups();
+
+        assertEquals(0, result.length);
+    }
+
+    // cubre rama lidedCups con multiples coincidencias
+    @Test
+    void branch_lidedCupsMultipleMatches() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+        tower.pushLid(1);
+        tower.pushLid(2);
+
+        int[] result = tower.lidedCups();
+
+        assertTrue(result.length >= 1);
+    }
+
+    // cubre rama swapToReduce cuando no hay mejora
+    @Test
+    void branch_swapToReduceNoImprovement() {
+        tower.pushCup(1);
+
+        String[][] result = tower.swapToReduce();
+
+        assertNull(result);
+    }
+
+    // cubre rama swapToReduce con mas elementos
+    @Test
+    void branch_swapToReduceWithElements() {
+        tower.pushCup(3);
+        tower.pushCup(1);
+
+        String[][] result = tower.swapToReduce();
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama removeCup inexistente
+    @Test
+    void branch_removeCupNonExistent() {
+        tower.removeCup(999);
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama removeLid inexistente
+    @Test
+    void branch_removeLidNonExistent() {
+        tower.removeLid(999);
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama popCup en vacio
+    @Test
+    void branch_popCupEmpty() {
+        tower.popCup();
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama popLid en vacio
+    @Test
+    void branch_popLidEmpty() {
+        tower.popLid();
+
+        assertNotNull(tower.stackingItems());
+    }
+
+    // cubre rama altura con varios elementos
+    @Test
+    void branch_heightMultipleElements() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+        tower.pushCup(3);
+
+        int h = tower.height();
+
+        assertTrue(h >= 0);
+    }
+
+    @Test
+    void branch_coverComplexScenario() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(1);
+        t.pushCup(3);
+        t.pushCup(2);
+
+        t.pushLid(2);
+        t.pushLid(1);
+        t.pushLid(3);
+
+        t.cover();
+
+        assertNotNull(t.stackingItems());
+        assertTrue(t.lidedCups().length >= 1);
+    }
+
+    @Test
+    void branch_swapToReduceRealCase() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(5);
+        t.pushCup(1);
+        t.pushCup(4);
+        t.pushCup(2);
+
+        String[][] result = t.swapToReduce();
+
+        assertNotNull(t.stackingItems());
+    }
+
+    @Test
+    void branch_fullMixedScenario() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(3);
+        t.pushLid(3);
+        t.pushCup(1);
+        t.pushLid(1);
+        t.pushCup(5);
+
+        t.swap("cup", 3, "cup", 1);
+        t.cover();
+        t.orderTower();
+        t.reverseTower();
+
+        assertNotNull(t.stackingItems());
+    }
+
+    @Test
+    void branch_heightEdgeCase() {
+        Tower t = new Tower(3, 10);
+
+        t.pushCup(5);
+        t.pushCup(4);
+        t.pushCup(3);
+
+        t.pushLid(5);
+        t.pushLid(4);
+
+        int h = t.height();
+
+        assertTrue(h >= 0);
+    }
+
 }

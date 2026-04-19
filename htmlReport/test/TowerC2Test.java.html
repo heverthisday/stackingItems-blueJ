@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerC2Test.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (1) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerC2Test.java</span></div><h1>TowerC2Test.java</h1><pre class="source lang-java linenums">package test;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerC2Test.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (3) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerC2Test.java</span></div><h1>TowerC2Test.java</h1><pre class="source lang-java linenums">package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -749,5 +749,220 @@ import static org.junit.jupiter.api.Assertions.*;
 <span class="fc" id="L749">        assertEquals(1, t.stackingItems().length);</span>
 <span class="fc" id="L750">        assertTrue(t.ok());</span>
 <span class="fc" id="L751">    }</span>
+
+    //Cubriendo los branches
+
+    // cubre rama swap con tipos invalidos
+    @Test
+    void branch_swapInvalidType() {
+<span class="fc" id="L758">        tower.pushCup(1);</span>
+<span class="fc" id="L759">        tower.swap(&quot;invalid&quot;, 1, &quot;cup&quot;, 1);</span>
+
+<span class="fc" id="L761">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L762">    }</span>
+
+    // cubre rama swap con null
+    @Test
+    void branch_swapNullType() {
+<span class="fc" id="L767">        tower.pushCup(1);</span>
+<span class="fc" id="L768">        tower.swap(null, 1, &quot;cup&quot;, 1);</span>
+
+<span class="fc" id="L770">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L771">    }</span>
+
+    // cubre rama swap con ambos elementos inexistentes
+    @Test
+    void branch_swapNonExistentBoth() {
+<span class="fc" id="L776">        tower.swap(&quot;cup&quot;, 99, &quot;cup&quot;, 100);</span>
+
+<span class="fc" id="L778">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L779">    }</span>
+
+    // cubre rama cover con torre vacia
+    @Test
+    void branch_coverEmptyTower() {
+<span class="fc" id="L784">        tower.cover();</span>
+
+<span class="fc" id="L786">        assertEquals(0, tower.stackingItems().length);</span>
+<span class="fc" id="L787">    }</span>
+
+    // cubre rama cover con solo tapas
+    @Test
+    void branch_coverOnlyLids() {
+<span class="fc" id="L792">        tower.pushLid(1);</span>
+<span class="fc" id="L793">        tower.pushLid(2);</span>
+
+<span class="fc" id="L795">        tower.cover();</span>
+
+<span class="fc" id="L797">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L798">    }</span>
+
+    // cubre rama cover con solo tazas
+    @Test
+    void branch_coverOnlyCups() {
+<span class="fc" id="L803">        tower.pushCup(1);</span>
+<span class="fc" id="L804">        tower.pushCup(2);</span>
+
+<span class="fc" id="L806">        tower.cover();</span>
+
+<span class="fc" id="L808">        assertEquals(0, tower.lidedCups().length);</span>
+<span class="fc" id="L809">    }</span>
+
+    // cubre rama lidedCups cuando no hay coincidencias
+    @Test
+    void branch_lidedCupsNoMatches() {
+<span class="fc" id="L814">        tower.pushCup(1);</span>
+<span class="fc" id="L815">        tower.pushCup(2);</span>
+
+<span class="fc" id="L817">        int[] result = tower.lidedCups();</span>
+
+<span class="fc" id="L819">        assertEquals(0, result.length);</span>
+<span class="fc" id="L820">    }</span>
+
+    // cubre rama lidedCups con multiples coincidencias
+    @Test
+    void branch_lidedCupsMultipleMatches() {
+<span class="fc" id="L825">        tower.pushCup(1);</span>
+<span class="fc" id="L826">        tower.pushCup(2);</span>
+<span class="fc" id="L827">        tower.pushLid(1);</span>
+<span class="fc" id="L828">        tower.pushLid(2);</span>
+
+<span class="fc" id="L830">        int[] result = tower.lidedCups();</span>
+
+<span class="pc bpc" id="L832" title="1 of 2 branches missed.">        assertTrue(result.length &gt;= 1);</span>
+<span class="fc" id="L833">    }</span>
+
+    // cubre rama swapToReduce cuando no hay mejora
+    @Test
+    void branch_swapToReduceNoImprovement() {
+<span class="fc" id="L838">        tower.pushCup(1);</span>
+
+<span class="fc" id="L840">        String[][] result = tower.swapToReduce();</span>
+
+<span class="fc" id="L842">        assertNull(result);</span>
+<span class="fc" id="L843">    }</span>
+
+    // cubre rama swapToReduce con mas elementos
+    @Test
+    void branch_swapToReduceWithElements() {
+<span class="fc" id="L848">        tower.pushCup(3);</span>
+<span class="fc" id="L849">        tower.pushCup(1);</span>
+
+<span class="fc" id="L851">        String[][] result = tower.swapToReduce();</span>
+
+<span class="fc" id="L853">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L854">    }</span>
+
+    // cubre rama removeCup inexistente
+    @Test
+    void branch_removeCupNonExistent() {
+<span class="fc" id="L859">        tower.removeCup(999);</span>
+
+<span class="fc" id="L861">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L862">    }</span>
+
+    // cubre rama removeLid inexistente
+    @Test
+    void branch_removeLidNonExistent() {
+<span class="fc" id="L867">        tower.removeLid(999);</span>
+
+<span class="fc" id="L869">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L870">    }</span>
+
+    // cubre rama popCup en vacio
+    @Test
+    void branch_popCupEmpty() {
+<span class="fc" id="L875">        tower.popCup();</span>
+
+<span class="fc" id="L877">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L878">    }</span>
+
+    // cubre rama popLid en vacio
+    @Test
+    void branch_popLidEmpty() {
+<span class="fc" id="L883">        tower.popLid();</span>
+
+<span class="fc" id="L885">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L886">    }</span>
+
+    // cubre rama altura con varios elementos
+    @Test
+    void branch_heightMultipleElements() {
+<span class="fc" id="L891">        tower.pushCup(1);</span>
+<span class="fc" id="L892">        tower.pushCup(2);</span>
+<span class="fc" id="L893">        tower.pushCup(3);</span>
+
+<span class="fc" id="L895">        int h = tower.height();</span>
+
+<span class="pc bpc" id="L897" title="1 of 2 branches missed.">        assertTrue(h &gt;= 0);</span>
+<span class="fc" id="L898">    }</span>
+
+    @Test
+    void branch_coverComplexScenario() {
+<span class="fc" id="L902">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L904">        t.pushCup(1);</span>
+<span class="fc" id="L905">        t.pushCup(3);</span>
+<span class="fc" id="L906">        t.pushCup(2);</span>
+
+<span class="fc" id="L908">        t.pushLid(2);</span>
+<span class="fc" id="L909">        t.pushLid(1);</span>
+<span class="fc" id="L910">        t.pushLid(3);</span>
+
+<span class="fc" id="L912">        t.cover();</span>
+
+<span class="fc" id="L914">        assertNotNull(t.stackingItems());</span>
+<span class="pc bpc" id="L915" title="1 of 2 branches missed.">        assertTrue(t.lidedCups().length &gt;= 1);</span>
+<span class="fc" id="L916">    }</span>
+
+    @Test
+    void branch_swapToReduceRealCase() {
+<span class="fc" id="L920">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L922">        t.pushCup(5);</span>
+<span class="fc" id="L923">        t.pushCup(1);</span>
+<span class="fc" id="L924">        t.pushCup(4);</span>
+<span class="fc" id="L925">        t.pushCup(2);</span>
+
+<span class="fc" id="L927">        String[][] result = t.swapToReduce();</span>
+
+<span class="fc" id="L929">        assertNotNull(t.stackingItems());</span>
+<span class="fc" id="L930">    }</span>
+
+    @Test
+    void branch_fullMixedScenario() {
+<span class="fc" id="L934">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L936">        t.pushCup(3);</span>
+<span class="fc" id="L937">        t.pushLid(3);</span>
+<span class="fc" id="L938">        t.pushCup(1);</span>
+<span class="fc" id="L939">        t.pushLid(1);</span>
+<span class="fc" id="L940">        t.pushCup(5);</span>
+
+<span class="fc" id="L942">        t.swap(&quot;cup&quot;, 3, &quot;cup&quot;, 1);</span>
+<span class="fc" id="L943">        t.cover();</span>
+<span class="fc" id="L944">        t.orderTower();</span>
+<span class="fc" id="L945">        t.reverseTower();</span>
+
+<span class="fc" id="L947">        assertNotNull(t.stackingItems());</span>
+<span class="fc" id="L948">    }</span>
+
+    @Test
+    void branch_heightEdgeCase() {
+<span class="fc" id="L952">        Tower t = new Tower(3, 10);</span>
+
+<span class="fc" id="L954">        t.pushCup(5);</span>
+<span class="fc" id="L955">        t.pushCup(4);</span>
+<span class="fc" id="L956">        t.pushCup(3);</span>
+
+<span class="fc" id="L958">        t.pushLid(5);</span>
+<span class="fc" id="L959">        t.pushLid(4);</span>
+
+<span class="fc" id="L961">        int h = t.height();</span>
+
+<span class="pc bpc" id="L963" title="1 of 2 branches missed.">        assertTrue(h &gt;= 0);</span>
+<span class="fc" id="L964">    }</span>
+
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

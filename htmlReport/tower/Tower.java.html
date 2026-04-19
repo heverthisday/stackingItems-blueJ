@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (1) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">tower</a> &gt; <span class="el_source">Tower.java</span></div><h1>Tower.java</h1><pre class="source lang-java linenums">package tower;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (3) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">tower</a> &gt; <span class="el_source">Tower.java</span></div><h1>Tower.java</h1><pre class="source lang-java linenums">package tower;
 import shapes.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -185,7 +185,7 @@ public class Tower {
 <span class="fc" id="L185">        int idxA = findItemIndex(ta, numberA);</span>
 <span class="fc" id="L186">        int idxB = findItemIndex(tb, numberB);</span>
 
-<span class="pc bpc" id="L188" title="1 of 4 branches missed.">        if (idxA == -1 || idxB == -1) {</span>
+<span class="fc bfc" id="L188" title="All 4 branches covered.">        if (idxA == -1 || idxB == -1) {</span>
 <span class="fc" id="L189">            ok = false;</span>
 <span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (isVisible) {</span>
 <span class="nc" id="L191">                JOptionPane.showMessageDialog(null, &quot;Error: no se encontraron los items especificados para swap&quot;);</span>
@@ -380,8 +380,8 @@ public class Tower {
 <span class="fc" id="L380">        Item previous = items.get(index - 1);</span>
         
 <span class="fc bfc" id="L382" title="All 4 branches covered.">        if (previous.getType().equals(&quot;lid&quot;) &amp;&amp; current.getType().equals(&quot;lid&quot;)) {</span>
-<span class="pc bpc" id="L383" title="1 of 2 branches missed.">            if (current.getNumber() &gt; previous.getNumber()) {</span>
-<span class="nc" id="L384">                return calculateLidBase(index, current.getNumber());</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">            if (current.getNumber() &gt; previous.getNumber()) {</span>
+<span class="fc" id="L384">                return calculateLidBase(index, current.getNumber());</span>
             }
         }
         
@@ -431,25 +431,25 @@ public class Tower {
 <span class="fc" id="L431">            return cup1Base + 1;</span>
         }
         
-<span class="pc bpc" id="L434" title="2 of 4 branches missed.">        if (cup1 != null &amp;&amp; lidNumber == cup1.getNumber()) {</span>
+<span class="pc bpc" id="L434" title="1 of 4 branches missed.">        if (cup1 != null &amp;&amp; lidNumber == cup1.getNumber()) {</span>
 <span class="fc" id="L435">            int cup1Index = items.indexOf(cup1);</span>
 <span class="fc" id="L436">            int cup1Base = calculateItemBase(cup1Index);</span>
 <span class="fc" id="L437">            return cup1Base + cup1.getHeight();</span>
         }
         
-<span class="nc bnc" id="L440" title="All 4 branches missed.">        if (cup2 != null &amp;&amp; lidNumber &lt; cup2.getNumber()) {</span>
+<span class="pc bpc" id="L440" title="3 of 4 branches missed.">        if (cup2 != null &amp;&amp; lidNumber &lt; cup2.getNumber()) {</span>
 <span class="nc" id="L441">            int cup1Index = items.indexOf(cup1);</span>
 <span class="nc" id="L442">            int cup1Base = calculateItemBase(cup1Index);</span>
 <span class="nc" id="L443">            return cup1Base + cup1.getHeight();</span>
         }
         
-<span class="nc bnc" id="L446" title="All 4 branches missed.">        if (cup2 != null &amp;&amp; lidNumber == cup2.getNumber()) {</span>
+<span class="pc bpc" id="L446" title="3 of 4 branches missed.">        if (cup2 != null &amp;&amp; lidNumber == cup2.getNumber()) {</span>
 <span class="nc" id="L447">            int cup2Index = items.indexOf(cup2);</span>
 <span class="nc" id="L448">            int cup2Base = calculateItemBase(cup2Index);</span>
 <span class="nc" id="L449">            return cup2Base + cup2.getHeight();</span>
         }
         
-<span class="nc bnc" id="L452" title="All 2 branches missed.">        if (cup3 != null) {</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">        if (cup3 != null) {</span>
 <span class="nc" id="L453">            int cup3Index = items.indexOf(cup3);</span>
 <span class="nc" id="L454">            int cup3Base = calculateItemBase(cup3Index);</span>
 <span class="nc" id="L455">            int cup3Top = cup3Base + cup3.getHeight();</span>
@@ -465,9 +465,9 @@ public class Tower {
             }
         }
         
-<span class="nc" id="L468">        int cup1Index = items.indexOf(cup1);</span>
-<span class="nc" id="L469">        int cup1Base = calculateItemBase(cup1Index);</span>
-<span class="nc" id="L470">        return cup1Base + cup1.getHeight();</span>
+<span class="fc" id="L468">        int cup1Index = items.indexOf(cup1);</span>
+<span class="fc" id="L469">        int cup1Base = calculateItemBase(cup1Index);</span>
+<span class="fc" id="L470">        return cup1Base + cup1.getHeight();</span>
     }
 
     /**
@@ -489,14 +489,14 @@ public class Tower {
 <span class="fc" id="L489">        Lid lid = new Lid(i, color);</span>
         
 <span class="fc" id="L491">        int currentHeight = calculateHeight();</span>
-<span class="pc bpc" id="L492" title="1 of 2 branches missed.">        if (currentHeight + lid.getHeight() &gt; maxHeight) {</span>
-<span class="nc" id="L493">            ok = false;</span>
-<span class="nc bnc" id="L494" title="All 2 branches missed.">            if (isVisible) {</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">        if (currentHeight + lid.getHeight() &gt; maxHeight) {</span>
+<span class="fc" id="L493">            ok = false;</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">            if (isVisible) {</span>
 <span class="nc" id="L495">                JOptionPane.showMessageDialog(null, &quot;Error: No hay espacio para la tapa &quot; + i);</span>
             } else {
-<span class="nc" id="L497">                System.out.println(&quot;Error: No hay espacio para la tapa &quot; + i);</span>
+<span class="fc" id="L497">                System.out.println(&quot;Error: No hay espacio para la tapa &quot; + i);</span>
             }
-<span class="nc" id="L499">            return;</span>
+<span class="fc" id="L499">            return;</span>
         }
         
 <span class="fc" id="L502">        items.add(lid);</span>
@@ -654,7 +654,7 @@ public class Tower {
 <span class="fc" id="L654">                        Lid lid = (Lid) items.get(j);</span>
 <span class="fc bfc" id="L655" title="All 2 branches covered.">                        if (lid.getNumber() == cup.getNumber()) {</span>
 <span class="fc" id="L656">                            int lidBase = calculateItemBase(j);</span>
-<span class="pc bpc" id="L657" title="1 of 2 branches missed.">                            if (lidBase == cupTop) {</span>
+<span class="fc bfc" id="L657" title="All 2 branches covered.">                            if (lidBase == cupTop) {</span>
 <span class="fc" id="L658">                                list.add(cup.getNumber());</span>
 <span class="fc" id="L659">                                break;</span>
                             }
