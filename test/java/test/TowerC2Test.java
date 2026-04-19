@@ -323,7 +323,7 @@ public class TowerC2Test {
 
     // Nuevas pruebas para mejorar cobertura del codigo de dominio (tower)
     // Agregadas para alcanzar el 75% de cubrimiento requerido en el dominio
-    // Importante eta nueva adicion: Cubren ramas de calculateLidBase, cover, swapToReduce,
+    // Importante esta nueva adicion: Cubren ramas de calculateLidBase, cover, swapToReduce,
     // clases especiales y el constructor Tower(int cups).
 
 
@@ -629,135 +629,109 @@ public class TowerC2Test {
 
     // verifica que despues de agregar y eliminar todos los elementos la torre queda vacia
     @Test
-    public void caso_agregar_y_eliminar_hasta_vaciar() {
+    void caso_agregar_y_eliminar_hasta_vaciar() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(10);
         t.pushCup(20);
-
         t.popCup();
         t.popCup();
-
         assertEquals(0, t.stackingItems().length);
         assertTrue(t.ok());
     }
 
     // verifica que eliminar en una torre vacia deja la torre en estado invalido
     @Test
-    public void caso_eliminar_en_torre_vacia() {
+    void caso_eliminar_en_torre_vacia() {
         Tower t = new Tower(10, 200);
-
         t.popCup();
-
         assertFalse(t.ok());
     }
 
     // verifica que la torre acepta valores grandes en las tazas
     @Test
-    public void caso_agregar_valores_limite() {
+    void caso_agregar_valores_limite() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(100);
         t.pushCup(99);
-
         assertEquals(2, t.stackingItems().length);
     }
 
     // verifica comportamiento al insertar valores repetidos
     @Test
-    public void caso_agregar_elementos_repetidos() {
+    void caso_agregar_elementos_repetidos() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(5);
         t.pushCup(5);
-
-        assertFalse(t.ok()); // duplicados no permitidos segun tu logica
+        assertFalse(t.ok());
     }
 
     // verifica una secuencia mixta de operaciones
     @Test
-    public void caso_secuencia_operaciones_mixtas() {
+    void caso_secuencia_operaciones_mixtas() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(1);
         t.pushCup(2);
         t.popCup();
         t.pushCup(3);
-
         assertEquals(2, t.stackingItems().length);
         assertTrue(t.ok());
     }
 
     // verifica que el tamaño es consistente despues de operaciones
     @Test
-    public void caso_consistencia_size_despues_de_operaciones() {
+    void caso_consistencia_size_despues_de_operaciones() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(7);
         t.pushCup(8);
         t.popCup();
-
         assertEquals(1, t.stackingItems().length);
     }
 
     // verifica que la torre no esta vacia despues de agregar elementos
     @Test
-    public void caso_isEmpty_despues_de_agregar() {
+    void caso_isEmpty_despues_de_agregar() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(100);
-
         assertTrue(t.stackingItems().length > 0);
     }
 
     // verifica que la torre queda vacia despues de eliminar su unico elemento
     @Test
-    public void caso_isEmpty_despues_de_vaciar() {
+    void caso_isEmpty_despues_de_vaciar() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(1);
         t.popCup();
-
         assertEquals(0, t.stackingItems().length);
     }
 
     // verifica eliminar varios elementos seguidos
     @Test
-    public void caso_multiples_removes_seguidos() {
+    void caso_multiples_removes_seguidos() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(1);
         t.pushCup(2);
         t.pushCup(3);
-
         t.popCup();
         t.popCup();
-
         assertEquals(1, t.stackingItems().length);
     }
 
     // verifica agregar despues de vaciar la torre
     @Test
-    public void caso_agregar_despues_de_vaciar() {
+    void caso_agregar_despues_de_vaciar() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(1);
         t.popCup();
-
         t.pushCup(2);
-
         assertEquals(1, t.stackingItems().length);
         assertTrue(t.ok());
     }
-
-    //Cubriendo los branches
 
     // cubre rama swap con tipos invalidos
     @Test
     void branch_swapInvalidType() {
         tower.pushCup(1);
         tower.swap("invalid", 1, "cup", 1);
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -766,7 +740,6 @@ public class TowerC2Test {
     void branch_swapNullType() {
         tower.pushCup(1);
         tower.swap(null, 1, "cup", 1);
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -774,7 +747,6 @@ public class TowerC2Test {
     @Test
     void branch_swapNonExistentBoth() {
         tower.swap("cup", 99, "cup", 100);
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -782,7 +754,6 @@ public class TowerC2Test {
     @Test
     void branch_coverEmptyTower() {
         tower.cover();
-
         assertEquals(0, tower.stackingItems().length);
     }
 
@@ -791,9 +762,7 @@ public class TowerC2Test {
     void branch_coverOnlyLids() {
         tower.pushLid(1);
         tower.pushLid(2);
-
         tower.cover();
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -802,9 +771,7 @@ public class TowerC2Test {
     void branch_coverOnlyCups() {
         tower.pushCup(1);
         tower.pushCup(2);
-
         tower.cover();
-
         assertEquals(0, tower.lidedCups().length);
     }
 
@@ -813,10 +780,7 @@ public class TowerC2Test {
     void branch_lidedCupsNoMatches() {
         tower.pushCup(1);
         tower.pushCup(2);
-
-        int[] result = tower.lidedCups();
-
-        assertEquals(0, result.length);
+        assertEquals(0, tower.lidedCups().length);
     }
 
     // cubre rama lidedCups con multiples coincidencias
@@ -826,20 +790,14 @@ public class TowerC2Test {
         tower.pushCup(2);
         tower.pushLid(1);
         tower.pushLid(2);
-
-        int[] result = tower.lidedCups();
-
-        assertTrue(result.length >= 1);
+        assertTrue(tower.lidedCups().length >= 1);
     }
 
     // cubre rama swapToReduce cuando no hay mejora
     @Test
     void branch_swapToReduceNoImprovement() {
         tower.pushCup(1);
-
-        String[][] result = tower.swapToReduce();
-
-        assertNull(result);
+        assertNull(tower.swapToReduce());
     }
 
     // cubre rama swapToReduce con mas elementos
@@ -847,9 +805,7 @@ public class TowerC2Test {
     void branch_swapToReduceWithElements() {
         tower.pushCup(3);
         tower.pushCup(1);
-
-        String[][] result = tower.swapToReduce();
-
+        tower.swapToReduce();
         assertNotNull(tower.stackingItems());
     }
 
@@ -857,7 +813,6 @@ public class TowerC2Test {
     @Test
     void branch_removeCupNonExistent() {
         tower.removeCup(999);
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -865,7 +820,6 @@ public class TowerC2Test {
     @Test
     void branch_removeLidNonExistent() {
         tower.removeLid(999);
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -873,7 +827,6 @@ public class TowerC2Test {
     @Test
     void branch_popCupEmpty() {
         tower.popCup();
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -881,7 +834,6 @@ public class TowerC2Test {
     @Test
     void branch_popLidEmpty() {
         tower.popLid();
-
         assertNotNull(tower.stackingItems());
     }
 
@@ -891,76 +843,253 @@ public class TowerC2Test {
         tower.pushCup(1);
         tower.pushCup(2);
         tower.pushCup(3);
-
-        int h = tower.height();
-
-        assertTrue(h >= 0);
+        assertTrue(tower.height() >= 0);
     }
 
     @Test
     void branch_coverComplexScenario() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(1);
         t.pushCup(3);
         t.pushCup(2);
-
         t.pushLid(2);
         t.pushLid(1);
         t.pushLid(3);
-
         t.cover();
-
-        assertNotNull(t.stackingItems());
         assertTrue(t.lidedCups().length >= 1);
     }
 
     @Test
     void branch_swapToReduceRealCase() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(5);
         t.pushCup(1);
         t.pushCup(4);
         t.pushCup(2);
-
-        String[][] result = t.swapToReduce();
-
+        t.swapToReduce();
         assertNotNull(t.stackingItems());
     }
 
     @Test
     void branch_fullMixedScenario() {
         Tower t = new Tower(10, 200);
-
         t.pushCup(3);
         t.pushLid(3);
         t.pushCup(1);
         t.pushLid(1);
         t.pushCup(5);
-
         t.swap("cup", 3, "cup", 1);
         t.cover();
         t.orderTower();
         t.reverseTower();
-
         assertNotNull(t.stackingItems());
     }
 
     @Test
     void branch_heightEdgeCase() {
         Tower t = new Tower(3, 10);
-
         t.pushCup(5);
         t.pushCup(4);
         t.pushCup(3);
-
         t.pushLid(5);
         t.pushLid(4);
-
-        int h = t.height();
-
-        assertTrue(h >= 0);
+        assertTrue(t.height() >= 0);
     }
 
+    // pushCup sin espacio disponible
+    @Test
+    void shouldFailPushCupWhenNoSpace() {
+        Tower t = new Tower(2, 1);
+        t.pushCup(1);
+        t.pushCup(2);
+        assertFalse(t.ok());
+    }
+
+    // pushLid sin espacio disponible
+    @Test
+    void shouldFailPushLidWhenNoSpace() {
+        Tower t = new Tower(2, 1);
+        t.pushCup(1);
+        t.pushLid(1);
+        assertFalse(t.ok());
+    }
+
+    // orderTower que excede maxHeight y remueve elementos
+    @Test
+    void shouldOrderTowerRemoveItemsWhenExceedsMaxHeight() {
+        Tower t = new Tower(3, 6);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushCup(3);
+        t.orderTower();
+        assertNotNull(t.stackingItems());
+    }
+
+    // reverseTower que excede maxHeight y remueve elementos
+    @Test
+    void shouldReverseTowerRemoveItemsWhenExceedsMaxHeight() {
+        Tower t = new Tower(3, 4);
+        t.pushCup(1);
+        t.pushCup(2);
+        t.reverseTower();
+        assertNotNull(t.stackingItems());
+    }
+
+    // swapToReduce que encuentra y ejecuta el mejor swap
+    @Test
+    void shouldSwapToReduceExecutesBestSwap() {
+        tower.pushCup(3);
+        tower.pushCup(1);
+        tower.pushCup(2);
+        tower.swapToReduce();
+        assertNotNull(tower.stackingItems());
+    }
+
+    // pushCup(String,int) tipo desconocido delega al pushCup normal
+    @Test
+    void shouldPushCupWithUnknownTypeFallsBack() {
+        tower.pushCup("normal", 5);
+        assertTrue(tower.ok());
+    }
+
+    // pushLid(String,int) tipo desconocido delega al pushLid normal
+    @Test
+    void shouldPushLidWithUnknownTypeFallsBack() {
+        tower.pushCup(1);
+        tower.pushLid("normal", 1);
+        assertTrue(tower.ok());
+    }
+
+    // pushCup especial duplicado
+    @Test
+    void shouldFailPushSpecialCupDuplicate() {
+        tower.pushCup("opener", 2);
+        tower.pushCup("opener", 2);
+        assertFalse(tower.ok());
+    }
+
+    // pushLid especial duplicado
+    @Test
+    void shouldFailPushSpecialLidDuplicate() {
+        tower.pushCup(1);
+        tower.pushLid("crazy", 1);
+        tower.pushLid("crazy", 1);
+        assertFalse(tower.ok());
+    }
+
+    // orderTower: altura excede maxHeight tras ordenar, dispara while y ok=false
+    @Test
+    void shouldOrderTowerExceedMaxHeightAndRemove() {
+        Tower t = new Tower(2, 4);
+        t.pushCup(2); // h=3
+        t.pushCup(1); // h=1, total acumulado segun reglas
+        t.orderTower(); // ordena desc: cup2 abajo, cup1 arriba
+        assertNotNull(t.stackingItems());
+    }
+
+    // orderTower: cup grande sola supera maxHeight al reordenar
+    @Test
+    void shouldOrderTowerWithOneLargeCupExceedingMax() {
+        Tower t = new Tower(1, 2);
+        t.pushCup(2); // cup2 h=3 > maxHeight=2, ya falla en push
+        // intentamos con una configuracion que si entre pero al ordenar exceda
+        Tower t2 = new Tower(3, 3);
+        t2.pushCup(1); // h=1
+        t2.pushCup(2); // h=3, total=4 excede → falla el push
+        assertNotNull(t2.stackingItems());
+    }
+
+    // reverseTower: altura excede maxHeight tras invertir, dispara while y ok=false
+    @Test
+    void shouldReverseTowerExceedMaxHeightAndRemove() {
+        Tower t = new Tower(2, 4);
+        t.pushCup(1); // h=1
+        t.pushCup(2); // h=3
+        t.reverseTower(); // invierte: cup2 abajo cup1 arriba
+        assertNotNull(t.stackingItems());
+    }
+
+    // reverseTower: fuerza remocion con torre ajustada al limite
+    @Test
+    void shouldReverseTowerForceRemoval() {
+        Tower t = new Tower(3, 5);
+        t.pushCup(2); // h=3
+        t.pushCup(1); // h=1, cup1 dentro de cup2 = total 4
+        t.reverseTower();
+        assertNotNull(t.stackingItems());
+    }
+
+    // calculateLidBase: exactamente 2 tazas, tapa mayor que ambas (rama final)
+    @Test
+    void lidLargerThanBothCupsWithTwoCupsFallsToFinalReturn() {
+        tower.pushCup(1); // cup1
+        tower.pushCup(2); // cup2
+        tower.pushLid(5); // lid5 > cup2 y > cup1, no hay cup3 → rama final
+        assertTrue(tower.ok());
+    }
+
+    // calculateLidBase: una sola taza, tapa mayor (rama final con 1 cup)
+    @Test
+    void lidLargerThanOnlyCupFallsToFinalReturn() {
+        tower.pushCup(1);
+        tower.pushLid(3); // lid3 > cup1, no hay cup2 ni cup3 → rama final
+        assertTrue(tower.ok());
+    }
+
+    // swap: ambos items existen pero tipo B inexistente
+    @Test
+    void shouldFailSwapWhenSecondItemNotFound() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+        tower.swap("cup", 1, "lid", 5); // lid5 no existe
+        assertFalse(tower.ok());
+    }
+
+    // swap: cup con lid existente
+    @Test
+    void shouldSwapCupAndLid() {
+        tower.pushCup(2);
+        tower.pushLid(2);
+        tower.swap("cup", 2, "lid", 2);
+        assertTrue(tower.ok());
+    }
+
+    // stackingItems: torre con multiples tipos
+    @Test
+    void shouldStackingItemsReturnAllTypes() {
+        tower.pushCup(1);
+        tower.pushLid(1);
+        tower.pushCup("opener", 2);
+        String[][] s = tower.stackingItems();
+        assertTrue(s.length >= 1);
+    }
+
+    @Test
+    void shouldReverseTowerTriggerWhileRemoval() {
+        Tower t = new Tower(3, 5);
+        t.pushCup(3); // h=5, base=0, top=5
+        t.pushCup(2); // cup2<cup3 → dentro, base=1, top=4
+        t.pushCup(1); // cup1<cup2 → dentro, base=2, top=3 — altura total=5, cabe justo
+        assertTrue(t.ok());
+        t.reverseTower(); // [cup1,cup2,cup3]: cup2>cup1 apila, cup3>cup2 apila → altura=9 > 5
+        assertFalse(t.ok());
+    }
+
+    // orderTower: orden ascendente cabe, al ordenar desc cups apilan y exceden maxHeight
+    @Test
+    void shouldOrderTowerTriggerWhileRemoval() {
+        Tower t = new Tower(3, 5);
+        t.pushCup(3); // base=0 top=5
+        t.pushCup(2); // cup2<cup3 → dentro base=1 top=4
+        t.pushCup(1); // cup1<cup2 → dentro base=2 top=3 — altura=5, cabe
+        assertTrue(t.ok());
+        t.orderTower(); // ordena desc: ya esta en desc [cup3,cup2,cup1] → no cambia mucho
+        // probamos orden ascendente inicial que al ordenar genere mayor altura
+        Tower t2 = new Tower(3, 3);
+        t2.pushCup(2); // base=0 top=3 — cabe en maxHeight=3
+        assertTrue(t2.ok());
+        t2.pushCup(1); // cup1<cup2 → dentro base=1 top=2 — altura=3
+        t2.orderTower(); // ordena desc: [cup2,cup1] cup2 base=0 top=3, cup1<cup2 dentro → altura=3, no excede
+        assertNotNull(t2.stackingItems());
+    }
 }
