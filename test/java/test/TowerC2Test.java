@@ -1223,4 +1223,31 @@ public class TowerC2Test {
         assertFalse(tower.ok());
         assertEquals(1, tower.stackingItems().length); // solo la taza
     }
+    @Test
+    void shouldNotMakeVisibleTwice() {
+        Tower t = new Tower(2, 10);
+        t.makeVisible();
+        t.makeVisible();
+        t.makeInvisible();
+    }
+
+    @Test
+    void shouldNotMakeInvisibleTwice() {
+        Tower t = new Tower(2, 10);
+        t.makeInvisible();
+    }
+
+    @Test
+    void stakingItemCanBeRemovedByDefault() {
+        tower.pushCup(1);
+        tower.popCup();
+        assertTrue(tower.ok());
+    }
+
+    @Test
+    void giftCupProcessEntryCalledTwiceDoesNothing() {
+        tower.pushCup("gift", 5);
+        tower.pushCup("opener", 3);
+        assertTrue(tower.ok());
+    }
 }
