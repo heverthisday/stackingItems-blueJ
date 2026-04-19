@@ -321,7 +321,7 @@ public class TowerC2Test {
     }
 
 
-    // Nuevas pruebas ara mejorar cobertura del codigo de dominio (tower)
+    // Nuevas pruebas para mejorar cobertura del codigo de dominio (tower)
     // Agregadas para alcanzar el 75% de cubrimiento requerido en el dominio
     // Importante eta nueva adicion: Cubren ramas de calculateLidBase, cover, swapToReduce,
     // clases especiales y el constructor Tower(int cups).
