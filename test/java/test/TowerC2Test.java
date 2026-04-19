@@ -626,4 +626,127 @@ public class TowerC2Test {
         }
         return -1;
     }
+
+    // verifica que despues de agregar y eliminar todos los elementos la torre queda vacia
+    @Test
+    public void caso_agregar_y_eliminar_hasta_vaciar() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(10);
+        t.pushCup(20);
+
+        t.popCup();
+        t.popCup();
+
+        assertEquals(0, t.stackingItems().length);
+        assertTrue(t.ok());
+    }
+
+    // verifica que eliminar en una torre vacia deja la torre en estado invalido
+    @Test
+    public void caso_eliminar_en_torre_vacia() {
+        Tower t = new Tower(10, 200);
+
+        t.popCup();
+
+        assertFalse(t.ok());
+    }
+
+    // verifica que la torre acepta valores grandes en las tazas
+    @Test
+    public void caso_agregar_valores_limite() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(100);
+        t.pushCup(99);
+
+        assertEquals(2, t.stackingItems().length);
+    }
+
+    // verifica comportamiento al insertar valores repetidos
+    @Test
+    public void caso_agregar_elementos_repetidos() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(5);
+        t.pushCup(5);
+
+        assertFalse(t.ok()); // duplicados no permitidos segun tu logica
+    }
+
+    // verifica una secuencia mixta de operaciones
+    @Test
+    public void caso_secuencia_operaciones_mixtas() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(1);
+        t.pushCup(2);
+        t.popCup();
+        t.pushCup(3);
+
+        assertEquals(2, t.stackingItems().length);
+        assertTrue(t.ok());
+    }
+
+    // verifica que el tamaño es consistente despues de operaciones
+    @Test
+    public void caso_consistencia_size_despues_de_operaciones() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(7);
+        t.pushCup(8);
+        t.popCup();
+
+        assertEquals(1, t.stackingItems().length);
+    }
+
+    // verifica que la torre no esta vacia despues de agregar elementos
+    @Test
+    public void caso_isEmpty_despues_de_agregar() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(100);
+
+        assertTrue(t.stackingItems().length > 0);
+    }
+
+    // verifica que la torre queda vacia despues de eliminar su unico elemento
+    @Test
+    public void caso_isEmpty_despues_de_vaciar() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(1);
+        t.popCup();
+
+        assertEquals(0, t.stackingItems().length);
+    }
+
+    // verifica eliminar varios elementos seguidos
+    @Test
+    public void caso_multiples_removes_seguidos() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(1);
+        t.pushCup(2);
+        t.pushCup(3);
+
+        t.popCup();
+        t.popCup();
+
+        assertEquals(1, t.stackingItems().length);
+    }
+
+    // verifica agregar despues de vaciar la torre
+    @Test
+    public void caso_agregar_despues_de_vaciar() {
+        Tower t = new Tower(10, 200);
+
+        t.pushCup(1);
+        t.popCup();
+
+        t.pushCup(2);
+
+        assertEquals(1, t.stackingItems().length);
+        assertTrue(t.ok());
+    }
 }

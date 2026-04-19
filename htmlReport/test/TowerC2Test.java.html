@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerC2Test.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (5) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerC2Test.java</span></div><h1>TowerC2Test.java</h1><pre class="source lang-java linenums">package test;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerC2Test.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in stackingItems-blueJ (1) Coverage Results</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">TowerC2Test.java</span></div><h1>TowerC2Test.java</h1><pre class="source lang-java linenums">package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,323 +9,745 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Pruebas de unidad para Tower - Ciclo 2.
  * Migrado a JUnit 5.
+ *
+ * A partir del metodo shouldCoverWithMultipleMatchingPairs se agregan
+ * pruebas nuevas orientadas a mejorar la cobertura del codigo de dominio
+ * (paquete tower) por encima del 75%, cubriendo ramas no ejercitadas
+ * en los tests originales.
  */
-<span class="fc" id="L13">public class TowerC2Test {</span>
+<span class="fc" id="L18">public class TowerC2Test {</span>
 
     private Tower tower;
 
     @BeforeEach
     void setUp() {
-        // Tower vacía reutilizada en cada test
-<span class="fc" id="L20">        tower = new Tower(10, 100);</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L24">        tower = new Tower(10, 200);</span>
+<span class="fc" id="L25">    }</span>
 
-    // --- Constructor con N tazas ---
+    // Constructor con N tazas
 
     @Test
     void shouldCreateTowerWithNCups() {
-<span class="fc" id="L27">        Tower t = new Tower(4, 100);</span>
-<span class="fc" id="L28">        String[][] s = t.stackingItems();</span>
-<span class="nc" id="L29">        assertEquals(4, s.length);</span>
-<span class="nc" id="L30">        assertTrue(t.ok());</span>
-<span class="nc" id="L31">    }</span>
+<span class="fc" id="L31">        Tower t = new Tower(4, 100);</span>
+<span class="fc" id="L32">        String[][] s = t.stackingItems();</span>
+<span class="nc" id="L33">        assertEquals(4, s.length);</span>
+<span class="nc" id="L34">        assertTrue(t.ok());</span>
+<span class="nc" id="L35">    }</span>
 
     @Test
     void shouldCreateCupsNumbered1ToN() {
-<span class="fc" id="L35">        Tower t = new Tower(3, 100);</span>
-<span class="fc" id="L36">        String[][] s = t.stackingItems();</span>
-<span class="nc" id="L37">        assertEquals(&quot;cup&quot;, s[0][0]);</span>
-<span class="nc" id="L38">        assertEquals(&quot;1&quot;,   s[0][1]);</span>
-<span class="nc" id="L39">        assertEquals(&quot;cup&quot;, s[1][0]);</span>
-<span class="nc" id="L40">        assertEquals(&quot;2&quot;,   s[1][1]);</span>
-<span class="nc" id="L41">        assertEquals(&quot;cup&quot;, s[2][0]);</span>
-<span class="nc" id="L42">        assertEquals(&quot;3&quot;,   s[2][1]);</span>
-<span class="nc" id="L43">    }</span>
+<span class="fc" id="L39">        Tower t = new Tower(3, 100);</span>
+<span class="fc" id="L40">        String[][] s = t.stackingItems();</span>
+<span class="nc" id="L41">        assertEquals(&quot;cup&quot;, s[0][0]);</span>
+<span class="nc" id="L42">        assertEquals(&quot;1&quot;,   s[0][1]);</span>
+<span class="nc" id="L43">        assertEquals(&quot;cup&quot;, s[1][0]);</span>
+<span class="nc" id="L44">        assertEquals(&quot;2&quot;,   s[1][1]);</span>
+<span class="nc" id="L45">        assertEquals(&quot;cup&quot;, s[2][0]);</span>
+<span class="nc" id="L46">        assertEquals(&quot;3&quot;,   s[2][1]);</span>
+<span class="nc" id="L47">    }</span>
 
-    // --- pushCup / popCup ---
+    // pushCup / popCup
 
     @Test
     void shouldPushCupAndIncreaseSize() {
-<span class="fc" id="L49">        tower.pushCup(1);</span>
-<span class="fc" id="L50">        assertEquals(1, tower.stackingItems().length);</span>
-<span class="fc" id="L51">        assertTrue(tower.ok());</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L53">        tower.pushCup(1);</span>
+<span class="fc" id="L54">        assertEquals(1, tower.stackingItems().length);</span>
+<span class="fc" id="L55">        assertTrue(tower.ok());</span>
+<span class="fc" id="L56">    }</span>
 
     @Test
     void shouldNotPushDuplicateCup() {
-<span class="fc" id="L56">        tower.pushCup(2);</span>
-<span class="fc" id="L57">        tower.pushCup(2); // duplicado</span>
-<span class="fc" id="L58">        assertFalse(tower.ok());</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L60">        tower.pushCup(2);</span>
+<span class="fc" id="L61">        tower.pushCup(2);</span>
+<span class="fc" id="L62">        assertFalse(tower.ok());</span>
+<span class="fc" id="L63">    }</span>
 
     @Test
     void shouldPopLastCup() {
-<span class="fc" id="L63">        tower.pushCup(1);</span>
-<span class="fc" id="L64">        tower.pushCup(2);</span>
-<span class="fc" id="L65">        tower.popCup();</span>
-<span class="fc" id="L66">        assertEquals(1, tower.stackingItems().length);</span>
-<span class="fc" id="L67">        assertTrue(tower.ok());</span>
-<span class="fc" id="L68">    }</span>
+<span class="fc" id="L67">        tower.pushCup(1);</span>
+<span class="fc" id="L68">        tower.pushCup(2);</span>
+<span class="fc" id="L69">        tower.popCup();</span>
+<span class="fc" id="L70">        assertEquals(1, tower.stackingItems().length);</span>
+<span class="fc" id="L71">        assertTrue(tower.ok());</span>
+<span class="fc" id="L72">    }</span>
 
     @Test
     void shouldFailPopCupOnEmptyTower() {
-<span class="fc" id="L72">        tower.popCup();</span>
-<span class="fc" id="L73">        assertFalse(tower.ok());</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L76">        tower.popCup();</span>
+<span class="fc" id="L77">        assertFalse(tower.ok());</span>
+<span class="fc" id="L78">    }</span>
 
-    // --- pushLid / popLid ---
+    // pushLid / popLid
 
     @Test
     void shouldPushLid() {
-<span class="fc" id="L80">        tower.pushCup(1);</span>
-<span class="fc" id="L81">        tower.pushLid(1);</span>
-<span class="fc" id="L82">        assertEquals(2, tower.stackingItems().length);</span>
-<span class="fc" id="L83">        assertTrue(tower.ok());</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L84">        tower.pushCup(1);</span>
+<span class="fc" id="L85">        tower.pushLid(1);</span>
+<span class="fc" id="L86">        assertEquals(2, tower.stackingItems().length);</span>
+<span class="fc" id="L87">        assertTrue(tower.ok());</span>
+<span class="fc" id="L88">    }</span>
 
     @Test
     void shouldNotPushDuplicateLid() {
-<span class="fc" id="L88">        tower.pushCup(1);</span>
-<span class="fc" id="L89">        tower.pushLid(1);</span>
-<span class="fc" id="L90">        tower.pushLid(1); // duplicado</span>
-<span class="fc" id="L91">        assertFalse(tower.ok());</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L92">        tower.pushCup(1);</span>
+<span class="fc" id="L93">        tower.pushLid(1);</span>
+<span class="fc" id="L94">        tower.pushLid(1);</span>
+<span class="fc" id="L95">        assertFalse(tower.ok());</span>
+<span class="fc" id="L96">    }</span>
 
     @Test
     void shouldPopLid() {
-<span class="fc" id="L96">        tower.pushCup(1);</span>
-<span class="fc" id="L97">        tower.pushLid(1);</span>
-<span class="fc" id="L98">        tower.popLid();</span>
-<span class="fc" id="L99">        assertEquals(1, tower.stackingItems().length);</span>
-<span class="fc" id="L100">        assertTrue(tower.ok());</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L100">        tower.pushCup(1);</span>
+<span class="fc" id="L101">        tower.pushLid(1);</span>
+<span class="fc" id="L102">        tower.popLid();</span>
+<span class="fc" id="L103">        assertEquals(1, tower.stackingItems().length);</span>
+<span class="fc" id="L104">        assertTrue(tower.ok());</span>
+<span class="fc" id="L105">    }</span>
 
     @Test
     void shouldFailPopLidFromEmptyTower() {
-<span class="fc" id="L105">        tower.popLid();</span>
-<span class="fc" id="L106">        assertFalse(tower.ok());</span>
-<span class="fc" id="L107">    }</span>
+<span class="fc" id="L109">        tower.popLid();</span>
+<span class="fc" id="L110">        assertFalse(tower.ok());</span>
+<span class="fc" id="L111">    }</span>
 
-    // --- height ---
+    // height
 
     @Test
     void shouldReturnZeroHeightForEmptyTower() {
-<span class="fc" id="L113">        assertEquals(0, tower.height());</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L117">        assertEquals(0, tower.height());</span>
+<span class="fc" id="L118">    }</span>
 
     @Test
     void shouldReturnPositiveHeightAfterPush() {
-<span class="fc" id="L118">        tower.pushCup(1);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        assertTrue(tower.height() &gt; 0);</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc" id="L122">        tower.pushCup(1);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        assertTrue(tower.height() &gt; 0);</span>
+<span class="fc" id="L124">    }</span>
 
     @Test
     void shouldNotExceedMaxHeight() {
-<span class="fc" id="L124">        Tower t = new Tower(3, 5);</span>
-<span class="fc" id="L125">        t.pushCup(3); // altura de cup 3 = 5</span>
-<span class="fc" id="L126">        t.pushCup(1); // no cabe</span>
-<span class="fc" id="L127">        assertFalse(t.ok());</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L128">        Tower t = new Tower(3, 5);</span>
+<span class="fc" id="L129">        t.pushCup(3);</span>
+<span class="fc" id="L130">        t.pushCup(1);</span>
+<span class="fc" id="L131">        assertFalse(t.ok());</span>
+<span class="fc" id="L132">    }</span>
 
-    // --- removeCup / removeLid ---
+    // removeCup / removeLid
 
     @Test
     void shouldRemoveSpecificCup() {
-<span class="fc" id="L134">        tower.pushCup(1);</span>
-<span class="fc" id="L135">        tower.pushCup(2);</span>
-<span class="fc" id="L136">        tower.removeCup(1);</span>
-<span class="fc" id="L137">        String[][] s = tower.stackingItems();</span>
-<span class="fc" id="L138">        assertEquals(1, s.length);</span>
-<span class="fc" id="L139">        assertEquals(&quot;2&quot;, s[0][1]);</span>
-<span class="fc" id="L140">        assertTrue(tower.ok());</span>
-<span class="fc" id="L141">    }</span>
+<span class="fc" id="L138">        tower.pushCup(1);</span>
+<span class="fc" id="L139">        tower.pushCup(2);</span>
+<span class="fc" id="L140">        tower.removeCup(1);</span>
+<span class="fc" id="L141">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L142">        assertEquals(1, s.length);</span>
+<span class="fc" id="L143">        assertEquals(&quot;2&quot;, s[0][1]);</span>
+<span class="fc" id="L144">        assertTrue(tower.ok());</span>
+<span class="fc" id="L145">    }</span>
 
     @Test
     void shouldFailRemoveNonExistentCup() {
-<span class="fc" id="L145">        tower.removeCup(5);</span>
-<span class="fc" id="L146">        assertFalse(tower.ok());</span>
-<span class="fc" id="L147">    }</span>
+<span class="fc" id="L149">        tower.removeCup(5);</span>
+<span class="fc" id="L150">        assertFalse(tower.ok());</span>
+<span class="fc" id="L151">    }</span>
 
     @Test
     void shouldRemoveSpecificLid() {
-<span class="fc" id="L151">        tower.pushCup(1);</span>
-<span class="fc" id="L152">        tower.pushLid(1);</span>
-<span class="fc" id="L153">        tower.removeLid(1);</span>
-<span class="fc" id="L154">        assertEquals(1, tower.stackingItems().length);</span>
-<span class="fc" id="L155">        assertTrue(tower.ok());</span>
-<span class="fc" id="L156">    }</span>
+<span class="fc" id="L155">        tower.pushCup(1);</span>
+<span class="fc" id="L156">        tower.pushLid(1);</span>
+<span class="fc" id="L157">        tower.removeLid(1);</span>
+<span class="fc" id="L158">        assertEquals(1, tower.stackingItems().length);</span>
+<span class="fc" id="L159">        assertTrue(tower.ok());</span>
+<span class="fc" id="L160">    }</span>
 
-    // --- swap ---
+    // swap
 
     @Test
     void shouldSwapTwoCups() {
-<span class="fc" id="L162">        tower.pushCup(1);</span>
-<span class="fc" id="L163">        tower.pushCup(2);</span>
-<span class="fc" id="L164">        String[][] before = tower.stackingItems();</span>
-<span class="fc" id="L165">        int idx1 = findIndex(before, &quot;cup&quot;, &quot;1&quot;);</span>
-<span class="fc" id="L166">        int idx2 = findIndex(before, &quot;cup&quot;, &quot;2&quot;);</span>
-
-<span class="fc" id="L168">        tower.swap(&quot;cup&quot;, 1, &quot;cup&quot;, 2);</span>
-
-<span class="fc" id="L170">        String[][] after = tower.stackingItems();</span>
-<span class="fc" id="L171">        assertTrue(tower.ok());</span>
-<span class="fc" id="L172">        assertEquals(&quot;1&quot;, after[idx2][1]);</span>
-<span class="fc" id="L173">        assertEquals(&quot;2&quot;, after[idx1][1]);</span>
-<span class="fc" id="L174">    }</span>
+<span class="fc" id="L166">        tower.pushCup(1);</span>
+<span class="fc" id="L167">        tower.pushCup(2);</span>
+<span class="fc" id="L168">        String[][] before = tower.stackingItems();</span>
+<span class="fc" id="L169">        int idx1 = findIndex(before, &quot;cup&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L170">        int idx2 = findIndex(before, &quot;cup&quot;, &quot;2&quot;);</span>
+<span class="fc" id="L171">        tower.swap(&quot;cup&quot;, 1, &quot;cup&quot;, 2);</span>
+<span class="fc" id="L172">        String[][] after = tower.stackingItems();</span>
+<span class="fc" id="L173">        assertTrue(tower.ok());</span>
+<span class="fc" id="L174">        assertEquals(&quot;1&quot;, after[idx2][1]);</span>
+<span class="fc" id="L175">        assertEquals(&quot;2&quot;, after[idx1][1]);</span>
+<span class="fc" id="L176">    }</span>
 
     @Test
     void shouldFailSwapWithNullType() {
-<span class="fc" id="L178">        tower.pushCup(1);</span>
-<span class="fc" id="L179">        tower.swap(null, 1, &quot;cup&quot;, 1);</span>
-<span class="fc" id="L180">        assertFalse(tower.ok());</span>
-<span class="fc" id="L181">    }</span>
+<span class="fc" id="L180">        tower.pushCup(1);</span>
+<span class="fc" id="L181">        tower.swap(null, 1, &quot;cup&quot;, 1);</span>
+<span class="fc" id="L182">        assertFalse(tower.ok());</span>
+<span class="fc" id="L183">    }</span>
 
     @Test
     void shouldFailSwapNonExistentItems() {
-<span class="fc" id="L185">        tower.pushCup(1);</span>
-<span class="fc" id="L186">        tower.swap(&quot;cup&quot;, 1, &quot;cup&quot;, 99);</span>
-<span class="fc" id="L187">        assertFalse(tower.ok());</span>
-<span class="fc" id="L188">    }</span>
+<span class="fc" id="L187">        tower.pushCup(1);</span>
+<span class="fc" id="L188">        tower.swap(&quot;cup&quot;, 1, &quot;cup&quot;, 99);</span>
+<span class="fc" id="L189">        assertFalse(tower.ok());</span>
+<span class="fc" id="L190">    }</span>
 
-    // --- reverseTower ---
+    // reverseTower
 
     @Test
     void shouldReverseTower() {
-<span class="fc" id="L194">        tower.pushCup(1);</span>
-<span class="fc" id="L195">        tower.pushCup(2);</span>
-<span class="fc" id="L196">        tower.pushCup(3);</span>
-<span class="fc" id="L197">        tower.reverseTower();</span>
-<span class="fc" id="L198">        String[][] s = tower.stackingItems();</span>
-<span class="fc" id="L199">        assertEquals(&quot;3&quot;, s[0][1]);</span>
-<span class="fc" id="L200">        assertEquals(&quot;2&quot;, s[1][1]);</span>
-<span class="fc" id="L201">        assertEquals(&quot;1&quot;, s[2][1]);</span>
-<span class="fc" id="L202">    }</span>
+<span class="fc" id="L196">        tower.pushCup(1);</span>
+<span class="fc" id="L197">        tower.pushCup(2);</span>
+<span class="fc" id="L198">        tower.pushCup(3);</span>
+<span class="fc" id="L199">        tower.reverseTower();</span>
+<span class="fc" id="L200">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L201">        assertEquals(&quot;3&quot;, s[0][1]);</span>
+<span class="fc" id="L202">        assertEquals(&quot;2&quot;, s[1][1]);</span>
+<span class="fc" id="L203">        assertEquals(&quot;1&quot;, s[2][1]);</span>
+<span class="fc" id="L204">    }</span>
 
-    // --- orderTower ---
+    // orderTower
 
     @Test
     void shouldOrderTowerDescending() {
-<span class="fc" id="L208">        tower.pushCup(1);</span>
-<span class="fc" id="L209">        tower.pushCup(3);</span>
-<span class="fc" id="L210">        tower.pushCup(2);</span>
-<span class="fc" id="L211">        tower.orderTower();</span>
-<span class="fc" id="L212">        String[][] s = tower.stackingItems();</span>
-<span class="fc" id="L213">        int n0 = Integer.parseInt(s[0][1]);</span>
-<span class="fc" id="L214">        int n1 = Integer.parseInt(s[1][1]);</span>
-<span class="fc" id="L215">        int n2 = Integer.parseInt(s[2][1]);</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        assertTrue(n0 &gt;= n1);</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">        assertTrue(n1 &gt;= n2);</span>
-<span class="fc" id="L218">    }</span>
+<span class="fc" id="L210">        tower.pushCup(1);</span>
+<span class="fc" id="L211">        tower.pushCup(3);</span>
+<span class="fc" id="L212">        tower.pushCup(2);</span>
+<span class="fc" id="L213">        tower.orderTower();</span>
+<span class="fc" id="L214">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L215">        int n0 = Integer.parseInt(s[0][1]);</span>
+<span class="fc" id="L216">        int n1 = Integer.parseInt(s[1][1]);</span>
+<span class="fc" id="L217">        int n2 = Integer.parseInt(s[2][1]);</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        assertTrue(n0 &gt;= n1);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        assertTrue(n1 &gt;= n2);</span>
+<span class="fc" id="L220">    }</span>
 
-    // --- cover ---
+    // cover
 
     @Test
     void shouldCoverMatchingCups() {
-<span class="fc" id="L224">        tower.pushCup(1);</span>
-<span class="fc" id="L225">        tower.pushCup(2);</span>
-<span class="fc" id="L226">        tower.pushLid(1);</span>
-<span class="fc" id="L227">        tower.cover();</span>
-<span class="fc" id="L228">        assertTrue(tower.ok());</span>
-<span class="fc" id="L229">    }</span>
+<span class="fc" id="L226">        tower.pushCup(1);</span>
+<span class="fc" id="L227">        tower.pushCup(2);</span>
+<span class="fc" id="L228">        tower.pushLid(1);</span>
+<span class="fc" id="L229">        tower.cover();</span>
+<span class="fc" id="L230">        assertTrue(tower.ok());</span>
+<span class="fc" id="L231">    }</span>
 
-    // --- stackingItems ---
+    // stackingItems
 
     @Test
     void shouldReturnEmptyArrayForEmptyTower() {
-<span class="fc" id="L235">        assertEquals(0, tower.stackingItems().length);</span>
-<span class="fc" id="L236">    }</span>
+<span class="fc" id="L237">        assertEquals(0, tower.stackingItems().length);</span>
+<span class="fc" id="L238">    }</span>
 
     @Test
     void shouldReturnCorrectTypeAndNumber() {
-<span class="fc" id="L240">        tower.pushCup(3);</span>
-<span class="fc" id="L241">        tower.pushLid(3);</span>
-<span class="fc" id="L242">        String[][] s = tower.stackingItems();</span>
-<span class="fc" id="L243">        assertEquals(2, s.length);</span>
-<span class="fc" id="L244">        boolean hasCup3 = false, hasLid3 = false;</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">        for (String[] row : s) {</span>
-<span class="pc bpc" id="L246" title="1 of 4 branches missed.">            if (row[0].contains(&quot;cup&quot;) &amp;&amp; row[1].equals(&quot;3&quot;)) hasCup3 = true;</span>
-<span class="pc bpc" id="L247" title="1 of 4 branches missed.">            if (row[0].equals(&quot;lid&quot;)  &amp;&amp; row[1].equals(&quot;3&quot;)) hasLid3 = true;</span>
+<span class="fc" id="L242">        tower.pushCup(3);</span>
+<span class="fc" id="L243">        tower.pushLid(3);</span>
+<span class="fc" id="L244">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L245">        assertEquals(2, s.length);</span>
+<span class="fc" id="L246">        boolean hasCup3 = false, hasLid3 = false;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for (String[] row : s) {</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">            if (row[0].contains(&quot;cup&quot;) &amp;&amp; row[1].equals(&quot;3&quot;)) hasCup3 = true;</span>
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">            if (row[0].equals(&quot;lid&quot;)  &amp;&amp; row[1].equals(&quot;3&quot;)) hasLid3 = true;</span>
         }
-<span class="fc" id="L249">        assertTrue(hasCup3);</span>
-<span class="fc" id="L250">        assertTrue(hasLid3);</span>
-<span class="fc" id="L251">    }</span>
+<span class="fc" id="L251">        assertTrue(hasCup3);</span>
+<span class="fc" id="L252">        assertTrue(hasLid3);</span>
+<span class="fc" id="L253">    }</span>
 
-    // --- lidedCups ---
+    // lidedCups
 
     @Test
     void shouldDetectLidedCup() {
-<span class="fc" id="L257">        tower.pushCup(1);</span>
-<span class="fc" id="L258">        tower.pushLid(1);</span>
-<span class="fc" id="L259">        int[] lided = tower.lidedCups();</span>
-<span class="fc" id="L260">        assertEquals(1, lided.length);</span>
-<span class="fc" id="L261">        assertEquals(1, lided[0]);</span>
-<span class="fc" id="L262">    }</span>
+<span class="fc" id="L259">        tower.pushCup(1);</span>
+<span class="fc" id="L260">        tower.pushLid(1);</span>
+<span class="fc" id="L261">        int[] lided = tower.lidedCups();</span>
+<span class="fc" id="L262">        assertEquals(1, lided.length);</span>
+<span class="fc" id="L263">        assertEquals(1, lided[0]);</span>
+<span class="fc" id="L264">    }</span>
 
     @Test
     void shouldReturnEmptyWhenNoLidedCups() {
-<span class="fc" id="L266">        tower.pushCup(1);</span>
-<span class="fc" id="L267">        assertEquals(0, tower.lidedCups().length);</span>
-<span class="fc" id="L268">    }</span>
+<span class="fc" id="L268">        tower.pushCup(1);</span>
+<span class="fc" id="L269">        assertEquals(0, tower.lidedCups().length);</span>
+<span class="fc" id="L270">    }</span>
 
-    // --- swapToReduce ---
+    // swapToReduce
 
     @Test
     void shouldReturnNullWhenNoReducingSwapExists() {
-<span class="fc" id="L274">        tower.pushCup(1); // única pieza, no hay swap posible</span>
-<span class="fc" id="L275">        assertNull(tower.swapToReduce());</span>
-<span class="fc" id="L276">        assertFalse(tower.ok());</span>
-<span class="fc" id="L277">    }</span>
+<span class="fc" id="L276">        tower.pushCup(1);</span>
+<span class="fc" id="L277">        assertNull(tower.swapToReduce());</span>
+<span class="fc" id="L278">        assertFalse(tower.ok());</span>
+<span class="fc" id="L279">    }</span>
 
-    // --- tazas especiales ---
+    // tazas y tapas especiales
 
     @Test
     void shouldPushOpenerCupAndRemoveLids() {
-<span class="fc" id="L283">        tower.pushCup(1);</span>
-<span class="fc" id="L284">        tower.pushLid(1);</span>
-<span class="fc" id="L285">        tower.pushCup(&quot;opener&quot;, 2);</span>
-<span class="fc" id="L286">        assertTrue(tower.ok());</span>
-        // la opener elimina todas las tapas
-<span class="fc" id="L288">        String[][] s = tower.stackingItems();</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">        for (String[] row : s) {</span>
-<span class="fc" id="L290">            assertNotEquals(&quot;lid&quot;, row[0]);</span>
+<span class="fc" id="L285">        tower.pushCup(1);</span>
+<span class="fc" id="L286">        tower.pushLid(1);</span>
+<span class="fc" id="L287">        tower.pushCup(&quot;opener&quot;, 2);</span>
+<span class="fc" id="L288">        assertTrue(tower.ok());</span>
+<span class="fc" id="L289">        String[][] s = tower.stackingItems();</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        for (String[] row : s) {</span>
+<span class="fc" id="L291">            assertNotEquals(&quot;lid&quot;, row[0]);</span>
         }
-<span class="fc" id="L292">    }</span>
+<span class="fc" id="L293">    }</span>
 
     @Test
     void shouldPushHierarchicalCupAndSink() {
-<span class="fc" id="L296">        tower.pushCup(1);</span>
-<span class="fc" id="L297">        tower.pushCup(&quot;hierarchical&quot;, 3); // 3 &gt; 1, se hunde</span>
-<span class="fc" id="L298">        assertTrue(tower.ok());</span>
-<span class="fc" id="L299">    }</span>
+<span class="fc" id="L297">        tower.pushCup(1);</span>
+<span class="fc" id="L298">        tower.pushCup(&quot;hierarchical&quot;, 3);</span>
+<span class="fc" id="L299">        assertTrue(tower.ok());</span>
+<span class="fc" id="L300">    }</span>
 
     @Test
     void shouldNotPushFearfulLidIfCupIsBigger() {
-<span class="fc" id="L303">        tower.pushCup(5);</span>
-<span class="fc" id="L304">        tower.pushLid(&quot;fearful&quot;, 1); // cup 5 &gt; lid 1 → miedo</span>
-<span class="fc" id="L305">        assertFalse(tower.ok());</span>
-<span class="fc" id="L306">    }</span>
+<span class="fc" id="L304">        tower.pushCup(5);</span>
+<span class="fc" id="L305">        tower.pushLid(&quot;fearful&quot;, 1);</span>
+<span class="fc" id="L306">        assertFalse(tower.ok());</span>
+<span class="fc" id="L307">    }</span>
 
     @Test
     void shouldPushFearfulLidIfCupIsSmaller() {
-<span class="fc" id="L310">        tower.pushCup(1);</span>
-<span class="fc" id="L311">        tower.pushLid(&quot;fearful&quot;, 5); // cup 1 &lt; lid 5 → entra</span>
-<span class="fc" id="L312">        assertTrue(tower.ok());</span>
-<span class="fc" id="L313">    }</span>
+<span class="fc" id="L311">        tower.pushCup(1);</span>
+<span class="fc" id="L312">        tower.pushLid(&quot;fearful&quot;, 5);</span>
+<span class="fc" id="L313">        assertTrue(tower.ok());</span>
+<span class="fc" id="L314">    }</span>
 
     @Test
     void shouldPushCrazyLidWithoutError() {
-<span class="fc" id="L317">        tower.pushCup(1);</span>
-<span class="fc" id="L318">        tower.pushLid(&quot;crazy&quot;, 1);</span>
-<span class="fc" id="L319">        assertTrue(tower.ok());</span>
-<span class="fc" id="L320">    }</span>
+<span class="fc" id="L318">        tower.pushCup(1);</span>
+<span class="fc" id="L319">        tower.pushLid(&quot;crazy&quot;, 1);</span>
+<span class="fc" id="L320">        assertTrue(tower.ok());</span>
+<span class="fc" id="L321">    }</span>
 
-    // --- utilidad ---
+
+    // Nuevas pruebas para mejorar cobertura del codigo de dominio (tower)
+    // Agregadas para alcanzar el 75% de cubrimiento requerido en el dominio
+    // Importante eta nueva adicion: Cubren ramas de calculateLidBase, cover, swapToReduce,
+    // clases especiales y el constructor Tower(int cups).
+
+
+    // calculateLidBase: tapa menor que la ultima taza (se mete dentro)
+    @Test
+    void lidSmallerThanLastCupSitsInsideIt() {
+<span class="fc" id="L333">        tower.pushCup(3);</span>
+<span class="fc" id="L334">        tower.pushLid(1);</span>
+<span class="fc" id="L335">        assertTrue(tower.ok());</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">        assertTrue(tower.height() &gt; 0);</span>
+<span class="fc" id="L337">    }</span>
+
+    // calculateLidBase: tapa igual a la ultima taza (queda encima)
+    @Test
+    void lidEqualToLastCupSitsOnTopOfIt() {
+<span class="fc" id="L342">        tower.pushCup(2);</span>
+<span class="fc" id="L343">        tower.pushLid(2);</span>
+<span class="fc" id="L344">        assertTrue(tower.ok());</span>
+<span class="fc" id="L345">        int[] lided = tower.lidedCups();</span>
+<span class="fc" id="L346">        assertEquals(1, lided.length);</span>
+<span class="fc" id="L347">        assertEquals(2, lided[0]);</span>
+<span class="fc" id="L348">    }</span>
+
+    // calculateLidBase: dos tazas, tapa menor que la penultima
+    @Test
+    void lidSmallerThanSecondLastCupWithTwoCups() {
+<span class="fc" id="L353">        tower.pushCup(1);</span>
+<span class="fc" id="L354">        tower.pushCup(3);</span>
+<span class="fc" id="L355">        tower.pushLid(2);</span>
+<span class="fc" id="L356">        assertTrue(tower.ok());</span>
+<span class="fc" id="L357">    }</span>
+
+    // calculateLidBase: tapa igual a la penultima taza
+    @Test
+    void lidEqualToSecondCup() {
+<span class="fc" id="L362">        tower.pushCup(2);</span>
+<span class="fc" id="L363">        tower.pushCup(4);</span>
+<span class="fc" id="L364">        tower.pushLid(2);</span>
+<span class="fc" id="L365">        assertTrue(tower.ok());</span>
+<span class="fc" id="L366">    }</span>
+
+    // calculateLidBase: tres tazas, cup1Top mayor que cup3Top
+    @Test
+    void lidAboveThreeCupsCup1TopGreater() {
+<span class="fc" id="L371">        tower.pushCup(1);</span>
+<span class="fc" id="L372">        tower.pushCup(2);</span>
+<span class="fc" id="L373">        tower.pushCup(5);</span>
+<span class="fc" id="L374">        tower.pushLid(6);</span>
+<span class="fc" id="L375">        assertTrue(tower.ok());</span>
+<span class="fc" id="L376">    }</span>
+
+    // calculateLidBase: tres tazas, cup3Top mayor que cup1Top
+    @Test
+    void lidAboveThreeCupsCup3TopGreater() {
+<span class="fc" id="L381">        tower.pushCup(5);</span>
+<span class="fc" id="L382">        tower.pushCup(2);</span>
+<span class="fc" id="L383">        tower.pushCup(1);</span>
+<span class="fc" id="L384">        tower.pushLid(6);</span>
+<span class="fc" id="L385">        assertTrue(tower.ok());</span>
+<span class="fc" id="L386">    }</span>
+
+    // calculateLidBase: tapa sin tazas previas
+    @Test
+    void lidWithNoCupsReturnsZeroBase() {
+<span class="fc" id="L391">        tower.pushLid(1);</span>
+<span class="fc" id="L392">        assertTrue(tower.ok());</span>
+<span class="fc" id="L393">    }</span>
+
+    // cover: multiples pares de tazas y tapas
+    @Test
+    void shouldCoverWithMultipleMatchingPairs() {
+<span class="fc" id="L398">        tower.pushCup(1);</span>
+<span class="fc" id="L399">        tower.pushCup(2);</span>
+<span class="fc" id="L400">        tower.pushCup(3);</span>
+<span class="fc" id="L401">        tower.pushLid(3);</span>
+<span class="fc" id="L402">        tower.pushLid(1);</span>
+<span class="fc" id="L403">        tower.pushLid(2);</span>
+<span class="fc" id="L404">        tower.cover();</span>
+<span class="fc" id="L405">        assertTrue(tower.ok());</span>
+<span class="fc" id="L406">        assertEquals(3, tower.lidedCups().length);</span>
+<span class="fc" id="L407">    }</span>
+
+    // cover: tapa sin par en la torre
+    @Test
+    void shouldCoverWithUnmatchedLid() {
+<span class="fc" id="L412">        tower.pushCup(1);</span>
+<span class="fc" id="L413">        tower.pushLid(2);</span>
+<span class="fc" id="L414">        tower.cover();</span>
+<span class="fc" id="L415">        assertTrue(tower.ok());</span>
+<span class="fc" id="L416">    }</span>
+
+    // cover: solo tapas, sin tazas
+    @Test
+    void shouldCoverWithOnlyLids() {
+<span class="fc" id="L421">        tower.pushLid(1);</span>
+<span class="fc" id="L422">        tower.pushLid(2);</span>
+<span class="fc" id="L423">        tower.cover();</span>
+<span class="fc" id="L424">        assertTrue(tower.ok());</span>
+<span class="fc" id="L425">    }</span>
+
+    // cover: solo tazas, sin tapas
+    @Test
+    void shouldCoverWithNoLids() {
+<span class="fc" id="L430">        tower.pushCup(1);</span>
+<span class="fc" id="L431">        tower.pushCup(2);</span>
+<span class="fc" id="L432">        tower.cover();</span>
+<span class="fc" id="L433">        assertTrue(tower.ok());</span>
+<span class="fc" id="L434">        assertEquals(0, tower.lidedCups().length);</span>
+<span class="fc" id="L435">    }</span>
+
+    // cover: torre vacia
+    @Test
+    void shouldCoverEmptyTower() {
+<span class="fc" id="L440">        tower.cover();</span>
+<span class="fc" id="L441">        assertTrue(tower.ok());</span>
+<span class="fc" id="L442">        assertEquals(0, tower.stackingItems().length);</span>
+<span class="fc" id="L443">    }</span>
+
+    // swapToReduce: intento con dos tazas
+    @Test
+    void shouldSwapToReduceWithTwoCups() {
+<span class="fc" id="L448">        tower.pushCup(3);</span>
+<span class="fc" id="L449">        tower.pushCup(1);</span>
+<span class="fc" id="L450">        String[][] result = tower.swapToReduce();</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L452">            assertTrue(tower.ok());</span>
+<span class="nc" id="L453">            assertEquals(2, result.length);</span>
+        }
+<span class="fc" id="L455">    }</span>
+
+    // swapToReduce: con tazas y tapas mezcladas
+    @Test
+    void shouldSwapToReduceWithCupsAndLids() {
+<span class="fc" id="L460">        tower.pushCup(1);</span>
+<span class="fc" id="L461">        tower.pushLid(1);</span>
+<span class="fc" id="L462">        tower.pushCup(3);</span>
+<span class="fc" id="L463">        tower.swapToReduce();</span>
+<span class="fc" id="L464">        assertNotNull(tower.stackingItems());</span>
+<span class="fc" id="L465">    }</span>
+
+    // swapToReduce: un solo elemento, retorna null
+    @Test
+    void shouldSwapToReduceReturnNullWithOneCup() {
+<span class="fc" id="L470">        tower.pushCup(2);</span>
+<span class="fc" id="L471">        assertNull(tower.swapToReduce());</span>
+<span class="fc" id="L472">        assertFalse(tower.ok());</span>
+<span class="fc" id="L473">    }</span>
+
+    // HierarchicalCup: no se puede remover si esta en el fondo
+    @Test
+    void shouldNotRemoveHierarchicalCupAtBottom() {
+<span class="fc" id="L478">        tower.pushCup(&quot;hierarchical&quot;, 3);</span>
+<span class="fc" id="L479">        tower.pushCup(1);</span>
+<span class="fc" id="L480">        tower.popCup();</span>
+<span class="fc" id="L481">        tower.popCup();</span>
+<span class="fc" id="L482">        assertFalse(tower.ok());</span>
+<span class="fc" id="L483">    }</span>
+
+    // HierarchicalCup: se hunde hasta la posicion correcta
+    @Test
+    void shouldHierarchicalCupSinkToBottom() {
+<span class="fc" id="L488">        tower.pushCup(2);</span>
+<span class="fc" id="L489">        tower.pushCup(4);</span>
+<span class="fc" id="L490">        tower.pushCup(&quot;hierarchical&quot;, 5);</span>
+<span class="fc" id="L491">        assertTrue(tower.ok());</span>
+<span class="fc" id="L492">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L493">        assertEquals(&quot;hierarchical&quot;, s[0][0]);</span>
+<span class="fc" id="L494">    }</span>
+
+    // GiftCup: revela un numero aleatorio entre 1 y 50
+    @Test
+    void shouldGiftCupRevealRandomNumber() {
+<span class="fc" id="L499">        tower.pushCup(&quot;gift&quot;, 1);</span>
+<span class="fc" id="L500">        assertTrue(tower.ok());</span>
+<span class="fc" id="L501">        String[][] s = tower.stackingItems();</span>
+<span class="fc" id="L502">        assertEquals(1, s.length);</span>
+<span class="fc" id="L503">        int num = Integer.parseInt(s[0][1]);</span>
+<span class="pc bpc" id="L504" title="2 of 4 branches missed.">        assertTrue(num &gt;= 1 &amp;&amp; num &lt;= 50);</span>
+<span class="fc" id="L505">    }</span>
+
+    // OpenerCup: elimina todas las tapas existentes
+    @Test
+    void shouldOpenerCupRemoveAllLids() {
+<span class="fc" id="L510">        tower.pushCup(1);</span>
+<span class="fc" id="L511">        tower.pushLid(1);</span>
+<span class="fc" id="L512">        tower.pushCup(2);</span>
+<span class="fc" id="L513">        tower.pushLid(2);</span>
+<span class="fc" id="L514">        tower.pushCup(&quot;opener&quot;, 3);</span>
+<span class="fc" id="L515">        assertTrue(tower.ok());</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">        for (String[] row : tower.stackingItems()) {</span>
+<span class="fc" id="L517">            assertNotEquals(&quot;lid&quot;, row[0]);</span>
+        }
+<span class="fc" id="L519">    }</span>
+
+    // OpenerCup: sin tapas previas no produce error
+    @Test
+    void shouldOpenerCupWithNoLidsWork() {
+<span class="fc" id="L524">        tower.pushCup(1);</span>
+<span class="fc" id="L525">        tower.pushCup(&quot;opener&quot;, 2);</span>
+<span class="fc" id="L526">        assertTrue(tower.ok());</span>
+<span class="fc" id="L527">    }</span>
+
+    // FearfulLid: entra en torre vacia
+    @Test
+    void shouldFearfulLidEnterEmptyTower() {
+<span class="fc" id="L532">        tower.pushLid(&quot;fearful&quot;, 3);</span>
+<span class="fc" id="L533">        assertTrue(tower.ok());</span>
+<span class="fc" id="L534">    }</span>
+
+    // FearfulLid: entra cuando el ultimo item es una tapa
+    @Test
+    void shouldFearfulLidEnterWhenLastItemIsLid() {
+<span class="fc" id="L539">        tower.pushLid(1);</span>
+<span class="fc" id="L540">        tower.pushLid(&quot;fearful&quot;, 2);</span>
+<span class="fc" id="L541">        assertTrue(tower.ok());</span>
+<span class="fc" id="L542">    }</span>
+
+    // CrazyLid: cambia colores de todos los items previos
+    @Test
+    void shouldCrazyLidChangeColorsOfAllItems() {
+<span class="fc" id="L547">        tower.pushCup(1);</span>
+<span class="fc" id="L548">        tower.pushCup(2);</span>
+<span class="fc" id="L549">        tower.pushCup(3);</span>
+<span class="fc" id="L550">        tower.pushLid(&quot;crazy&quot;, 1);</span>
+<span class="fc" id="L551">        assertTrue(tower.ok());</span>
+<span class="fc" id="L552">        assertEquals(4, tower.stackingItems().length);</span>
+<span class="fc" id="L553">    }</span>
+
+    // removeLid: falla si la tapa no existe
+    @Test
+    void shouldFailRemoveNonExistentLid() {
+<span class="fc" id="L558">        tower.pushCup(1);</span>
+<span class="fc" id="L559">        tower.removeLid(99);</span>
+<span class="fc" id="L560">        assertFalse(tower.ok());</span>
+<span class="fc" id="L561">    }</span>
+
+    // swap: falla con tipo invalido
+    @Test
+    void shouldFailSwapWithInvalidType() {
+<span class="fc" id="L566">        tower.pushCup(1);</span>
+<span class="fc" id="L567">        tower.swap(&quot;bowl&quot;, 1, &quot;cup&quot;, 1);</span>
+<span class="fc" id="L568">        assertFalse(tower.ok());</span>
+<span class="fc" id="L569">    }</span>
+
+    // orderTower: con tazas y tapas mezcladas
+    @Test
+    void shouldOrderTowerWithCupsAndLids() {
+<span class="fc" id="L574">        tower.pushCup(1);</span>
+<span class="fc" id="L575">        tower.pushCup(3);</span>
+<span class="fc" id="L576">        tower.pushLid(2);</span>
+<span class="fc" id="L577">        tower.pushCup(2);</span>
+<span class="fc" id="L578">        tower.orderTower();</span>
+<span class="fc" id="L579">        assertTrue(tower.ok());</span>
+<span class="fc" id="L580">    }</span>
+
+    // reverseTower: con un solo elemento
+    @Test
+    void shouldReverseTowerWithSingleElement() {
+<span class="fc" id="L585">        tower.pushCup(1);</span>
+<span class="fc" id="L586">        tower.reverseTower();</span>
+<span class="fc" id="L587">        assertTrue(tower.ok());</span>
+<span class="fc" id="L588">        assertEquals(1, tower.stackingItems().length);</span>
+<span class="fc" id="L589">    }</span>
+
+    // lidedCups: retorna resultado ordenado con multiples tapadas
+    @Test
+    void shouldLidedCupsReturnSortedResult() {
+<span class="fc" id="L594">        tower.pushCup(3);</span>
+<span class="fc" id="L595">        tower.pushLid(3);</span>
+<span class="fc" id="L596">        tower.pushCup(1);</span>
+<span class="fc" id="L597">        tower.pushLid(1);</span>
+<span class="fc" id="L598">        int[] lided = tower.lidedCups();</span>
+<span class="fc" id="L599">        assertEquals(2, lided.length);</span>
+<span class="fc" id="L600">        assertEquals(1, lided[0]);</span>
+<span class="fc" id="L601">        assertEquals(3, lided[1]);</span>
+<span class="fc" id="L602">    }</span>
+
+    // Constructor Tower(int cups): crea torre con N tazas directamente
+    @Test
+    void shouldConstructorWithCupsCreateCorrectTower() {
+<span class="fc" id="L607">        Tower t2 = new Tower(5);</span>
+<span class="fc" id="L608">        String[][] s = t2.stackingItems();</span>
+<span class="fc" id="L609">        assertEquals(5, s.length);</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">        for (String[] row : s) assertEquals(&quot;cup&quot;, row[0]);</span>
+<span class="fc" id="L611">        assertTrue(t2.ok());</span>
+<span class="fc" id="L612">    }</span>
+
+    // Constructor Tower(int cups): la torre tiene altura positiva
+    @Test
+    void shouldConstructorWithCupsHavePositiveHeight() {
+<span class="fc" id="L617">        Tower t2 = new Tower(3);</span>
+<span class="pc bpc" id="L618" title="1 of 2 branches missed.">        assertTrue(t2.height() &gt; 0);</span>
+<span class="fc" id="L619">    }</span>
+
+    // utilidad
 
     private int findIndex(String[][] s, String type, String num) {
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">        for (int i = 0; i &lt; s.length; i++) {</span>
-<span class="pc bpc" id="L326" title="1 of 4 branches missed.">            if (s[i][0].equals(type) &amp;&amp; s[i][1].equals(num)) return i;</span>
+<span class="pc bpc" id="L624" title="1 of 2 branches missed.">        for (int i = 0; i &lt; s.length; i++) {</span>
+<span class="pc bpc" id="L625" title="1 of 4 branches missed.">            if (s[i][0].equals(type) &amp;&amp; s[i][1].equals(num)) return i;</span>
         }
-<span class="nc" id="L328">        return -1;</span>
+<span class="nc" id="L627">        return -1;</span>
     }
+
+    // verifica que despues de agregar y eliminar todos los elementos la torre queda vacia
+    @Test
+    public void caso_agregar_y_eliminar_hasta_vaciar() {
+<span class="fc" id="L633">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L635">        t.pushCup(10);</span>
+<span class="fc" id="L636">        t.pushCup(20);</span>
+
+<span class="fc" id="L638">        t.popCup();</span>
+<span class="fc" id="L639">        t.popCup();</span>
+
+<span class="fc" id="L641">        assertEquals(0, t.stackingItems().length);</span>
+<span class="fc" id="L642">        assertTrue(t.ok());</span>
+<span class="fc" id="L643">    }</span>
+
+    // verifica que eliminar en una torre vacia deja la torre en estado invalido
+    @Test
+    public void caso_eliminar_en_torre_vacia() {
+<span class="fc" id="L648">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L650">        t.popCup();</span>
+
+<span class="fc" id="L652">        assertFalse(t.ok());</span>
+<span class="fc" id="L653">    }</span>
+
+    // verifica que la torre acepta valores grandes en las tazas
+    @Test
+    public void caso_agregar_valores_limite() {
+<span class="fc" id="L658">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L660">        t.pushCup(100);</span>
+<span class="fc" id="L661">        t.pushCup(99);</span>
+
+<span class="nc" id="L663">        assertEquals(2, t.stackingItems().length);</span>
+<span class="nc" id="L664">    }</span>
+
+    // verifica comportamiento al insertar valores repetidos
+    @Test
+    public void caso_agregar_elementos_repetidos() {
+<span class="fc" id="L669">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L671">        t.pushCup(5);</span>
+<span class="fc" id="L672">        t.pushCup(5);</span>
+
+<span class="fc" id="L674">        assertFalse(t.ok()); // duplicados no permitidos segun tu logica</span>
+<span class="fc" id="L675">    }</span>
+
+    // verifica una secuencia mixta de operaciones
+    @Test
+    public void caso_secuencia_operaciones_mixtas() {
+<span class="fc" id="L680">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L682">        t.pushCup(1);</span>
+<span class="fc" id="L683">        t.pushCup(2);</span>
+<span class="fc" id="L684">        t.popCup();</span>
+<span class="fc" id="L685">        t.pushCup(3);</span>
+
+<span class="fc" id="L687">        assertEquals(2, t.stackingItems().length);</span>
+<span class="fc" id="L688">        assertTrue(t.ok());</span>
+<span class="fc" id="L689">    }</span>
+
+    // verifica que el tamaño es consistente despues de operaciones
+    @Test
+    public void caso_consistencia_size_despues_de_operaciones() {
+<span class="fc" id="L694">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L696">        t.pushCup(7);</span>
+<span class="fc" id="L697">        t.pushCup(8);</span>
+<span class="fc" id="L698">        t.popCup();</span>
+
+<span class="fc" id="L700">        assertEquals(1, t.stackingItems().length);</span>
+<span class="fc" id="L701">    }</span>
+
+    // verifica que la torre no esta vacia despues de agregar elementos
+    @Test
+    public void caso_isEmpty_despues_de_agregar() {
+<span class="fc" id="L706">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L708">        t.pushCup(100);</span>
+
+<span class="pc bpc" id="L710" title="1 of 2 branches missed.">        assertTrue(t.stackingItems().length &gt; 0);</span>
+<span class="fc" id="L711">    }</span>
+
+    // verifica que la torre queda vacia despues de eliminar su unico elemento
+    @Test
+    public void caso_isEmpty_despues_de_vaciar() {
+<span class="fc" id="L716">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L718">        t.pushCup(1);</span>
+<span class="fc" id="L719">        t.popCup();</span>
+
+<span class="fc" id="L721">        assertEquals(0, t.stackingItems().length);</span>
+<span class="fc" id="L722">    }</span>
+
+    // verifica eliminar varios elementos seguidos
+    @Test
+    public void caso_multiples_removes_seguidos() {
+<span class="fc" id="L727">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L729">        t.pushCup(1);</span>
+<span class="fc" id="L730">        t.pushCup(2);</span>
+<span class="fc" id="L731">        t.pushCup(3);</span>
+
+<span class="fc" id="L733">        t.popCup();</span>
+<span class="fc" id="L734">        t.popCup();</span>
+
+<span class="fc" id="L736">        assertEquals(1, t.stackingItems().length);</span>
+<span class="fc" id="L737">    }</span>
+
+    // verifica agregar despues de vaciar la torre
+    @Test
+    public void caso_agregar_despues_de_vaciar() {
+<span class="fc" id="L742">        Tower t = new Tower(10, 200);</span>
+
+<span class="fc" id="L744">        t.pushCup(1);</span>
+<span class="fc" id="L745">        t.popCup();</span>
+
+<span class="fc" id="L747">        t.pushCup(2);</span>
+
+<span class="fc" id="L749">        assertEquals(1, t.stackingItems().length);</span>
+<span class="fc" id="L750">        assertTrue(t.ok());</span>
+<span class="fc" id="L751">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
