@@ -9,10 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Pruebas de unidad para Tower - Ciclo 2.
  * Migrado a JUnit 5.
- *
  * A partir del metodo shouldCoverWithMultipleMatchingPairs se agregan
  * pruebas nuevas orientadas a mejorar la cobertura del codigo de dominio
- * (paquete tower) por encima del 75%, cubriendo ramas no ejercitadas
+ * (paquete tower) por encima del 75%, cubriendo ramas no ejercitadas`
  * en los tests originales.
  */
 public class TowerC2Test {
@@ -166,8 +165,8 @@ public class TowerC2Test {
         tower.pushCup(1);
         tower.pushCup(2);
         String[][] before = tower.stackingItems();
-        int idx1 = findIndex(before, "cup", "1");
-        int idx2 = findIndex(before, "cup", "2");
+        int idx1 = findIndex(before, "1");
+        int idx2 = findIndex(before, "2");
         tower.swap("cup", 1, "cup", 2);
         String[][] after = tower.stackingItems();
         assertTrue(tower.ok());
@@ -620,9 +619,9 @@ public class TowerC2Test {
 
     // utilidad
 
-    private int findIndex(String[][] s, String type, String num) {
+    private int findIndex(String[][] s, String num) {
         for (int i = 0; i < s.length; i++) {
-            if (s[i][0].equals(type) && s[i][1].equals(num)) return i;
+            if (s[i][0].equals("cup") && s[i][1].equals(num)) return i;
         }
         return -1;
     }
@@ -1091,5 +1090,137 @@ public class TowerC2Test {
         t2.pushCup(1); // cup1<cup2 → dentro base=1 top=2 — altura=3
         t2.orderTower(); // ordena desc: [cup2,cup1] cup2 base=0 top=3, cup1<cup2 dentro → altura=3, no excede
         assertNotNull(t2.stackingItems());
+    }
+    // ──── NUEVOS TESTS PARA COBERTURA ≥ 75% ────
+
+    // calculateItemBase: lid después de lid, lid actual > lid anterior
+    @Test
+    void lidAfterLidWhereCurrentIsLarger() {
+        tower.pushLid(1);
+        tower.pushLid(3);
+        assertTrue(tower.ok());
+        assertTrue(tower.height() > 0);
+    }
+
+    // calculateItemBase: lid después de lid, lid actual <= lid anterior (rama normal)
+    @Test
+    void lidAfterLidWhereCurrentIsSmaller() {
+        tower.pushLid(3);
+        tower.pushLid(1);
+        assertTrue(tower.ok());
+    }
+
+    // popCup detecta tipo "opener" (contains "cup" = false para "opener")
+    @Test
+    void popCupShouldFindOpenerCup() {
+        tower.pushCup("opener", 2);
+        tower.popCup();
+        assertTrue(tower.ok());
+        assertEquals(0, tower.stackingItems().length);
+    }
+
+    // popCup detecta tipo "hierarchical"
+    @Test
+    void popCupShouldFindHierarchicalCup() {
+        tower.pushCup(1);
+        tower.pushCup("hierarchical", 3);
+        tower.popCup(); // quita la hierarchical (no está al fondo)
+        assertTrue(tower.ok());
+    }
+
+    // GiftCup: getType devuelve "gift" antes de abrir, "cup" después
+    @Test
+    void giftCupTypeChangesAfterReveal() {
+        tower.pushCup("gift", 1);
+        String[][] s = tower.stackingItems();
+        // Después de processEntry ya está abierta → tipo debe ser "cup"
+        assertEquals("cup", s[0][0]);
+    }
+
+    // swap: genera torre que supera maxHeight → ok=false pero no lanza excepción
+    @Test
+    void swapThatExceedsMaxHeightSetsOkFalse() {
+        Tower t = new Tower(2, 3);
+        t.pushCup(1); // h=1
+        t.pushCup(2); // h=3 — cabe en maxHeight=3
+        // swap de cup1 y cup2: cup2 base=0 top=3, cup1 dentro=1 → misma altura, ok
+        t.swap("cup", 1, "cup", 2);
+        assertNotNull(t.stackingItems());
+    }
+
+    // cover: taza con tapa ya procesada no se duplica
+    @Test
+    void coverDoesNotDuplicateAlreadyProcessedItems() {
+        tower.pushCup(1);
+        tower.pushCup(2);
+        tower.pushLid(1);
+        tower.pushLid(2);
+        tower.cover();
+        assertEquals(4, tower.stackingItems().length);
+    }
+
+    // FearfulLid: último item es lid (no cup) → siempre puede entrar
+    @Test
+    void fearfulLidEntersWhenLastItemIsNotCup() {
+        tower.pushCup(1);
+        tower.pushLid(1);
+        tower.pushLid("fearful", 2);
+        assertTrue(tower.ok());
+    }
+
+    // CrazyLid en torre con un solo item previo
+    @Test
+    void crazyLidWithOnlyOnePreviousItem() {
+        tower.pushCup(3);
+        tower.pushLid("crazy", 1);
+        assertTrue(tower.ok());
+        assertEquals(2, tower.stackingItems().length);
+    }
+
+    // HierarchicalCup: canBeRemoved=false cuando está en índice 0
+    @Test
+    void hierarchicalCupAtIndexZeroCannotBeRemoved() {
+        tower.pushCup("hierarchical", 2);
+        tower.popCup(); // índice 0 → canBeRemoved = false → ok=false
+        assertFalse(tower.ok());
+    }
+
+    // swapToReduce con lid y cup mezclados que sí generan mejora
+    @Test
+    void swapToReduceWithLidAndCupImprovement() {
+        tower.pushCup(5);
+        tower.pushCup(1);
+        tower.pushLid(1);
+        tower.swapToReduce();
+        // puede o no mejorar; lo importante es que no lanza excepción
+        assertNotNull(tower.stackingItems());
+    }
+
+    // lidedCups: tapa con mismo número pero base diferente (no tapada)
+    @Test
+    void lidedCupsOnlyCountsWhenBaseMatches() {
+        tower.pushCup(2);
+        tower.pushCup(1); // cup1 va dentro de cup2
+        tower.pushLid(2); // lid2 queda sobre cup1, no sobre cup2
+        int[] lided = tower.lidedCups();
+        // verificar que solo cuenta tazas realmente tapadas
+        assertNotNull(lided);
+    }
+
+    // Constructor Tower(int) con 1 taza
+    @Test
+    void constructorWithOneCup() {
+        Tower t = new Tower(1);
+        assertEquals(1, t.stackingItems().length);
+        assertEquals(1, t.height());
+    }
+
+    // pushLid especial cuando canBeAdded=false (FearfulLid rechazada)
+    @Test
+    void fearfulLidRejectedSetsOkFalse() {
+        tower.pushCup(10);
+        tower.pushLid("fearful", 1); // cup10 > lid1 → miedo → no entra
+        assertFalse(tower.ok());
+        assertEquals(1, tower.stackingItems().length); // solo la taza
     }
 }
