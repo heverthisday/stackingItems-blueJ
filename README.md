@@ -147,6 +147,8 @@ Despues de aplicar las correcciones:
 |-------|---------|
 | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
 
+
+
 ### 6. Conclusiones del Analisis Estatico
 
 1. La migracion de BlueJ a IntelliJ fue el principal reto del analisis estatico ya que implico reorganizar toda la estructura del proyecto pero fue una muy gran ayuda para el analisis dinamico.
