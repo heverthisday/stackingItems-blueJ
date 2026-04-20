@@ -63,39 +63,39 @@ Nos vamos a enfocar en la clase Tower, tenemos un cubrimeinto real del dominio d
 
 **¿Como lo mejoramos?**
 
-  Para mejorar las medidas se impelemtaron (**varios**) nuevos test en la clase TowerC2Test y en TowerAccetptance2 que se pueden ver en diferentes commits tales como "test para subir cobertura"
+  Para mejorar las medidas se impelemtaron (**varios**) nuevos test en la clase TowerC2Test y en TowerAccetptance2 que se pueden ver en diferentes commits tales como "test para subir cobertura" que fue el commit final pero hubieron varios commit para lograr obtener la covertura deseada, aqui el resultado:
+  
 ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a0bdcceab61d0c81d29be0ff3c80ab0d87989370/coverageFinal.png)
+
 ### 7. Conclusiones del Analisis Dinamico
 
-- Partir de 120 tests con 60% de cobertura nos permitio identificar 
-  rapidamente las zonas criticas sin cubrir
-- La clase Tower concentra la mayor parte de la logica de dominio y 
-  por eso fue la que mas esfuerzo requirio para mejorar su cobertura
-- Agregar 58 tests nuevos (178 en total) subio el cubrimiento de lines 
-  de 60% a 78%, superando la meta del 75%
-- El analisis dinamico demostro que habia ramas enteras del codigo 
-  (como TowerContest) que nunca se ejecutaban en las pruebas originales
-- JaCoCo fue una herramienta fundamental para visualizar exactamente 
-  que lineas y ramas del codigo no estaban siendo validadas
+1. Una buena cobertura no solo implica un alto porcentaje sino tambien probar diferentes caminos del programa incluyendo casos limite y errores
 
----
+2. Jacoco es una gran herramienta para ayudarnos a darnos cuenta de codigo que no hemos cubierto con nuestros test ademas de que nos da informer visualmente bonitos que son faciles de entender y
+   nos señala en rojo que partes del codigo son las que nos estan generando conflictos
+
+3. Aprendimos a distinguir que una cobertura grande en una carpeta que incluye al codigo del dominio no es necesariamnete que el codigo del dominio tiene alta covertura ya que hay muchas clases que
+   pueden estar inflando esta estadistica
+
+4. Aprendimos sobre que son los branches
+
+
 ## Analisis Estatico
 
 ### 1. Introduccion
 
-El analisis estatico es una tecnica de evaluacion de software que se 
-realiza sin ejecutar el programa. Analiza el codigo fuente directamente 
-para detectar posibles errores, malas practicas y violaciones a reglas 
-de calidad. A diferencia del analisis dinamico, no requiere datos de 
-prueba ni ejecucion del sistema.
+El analisis estatico es una tecnica de evaluacion de software que se realiza sin ejecutar el programa este analiza el codigo directamente para detectar posibles errores, malas practicas y violaciones a reglas de calidad.
+
+A diferencia del analisis dinamico, no requiere datos de rueba ni ejecucion del sistema sino que IntelliJ nos va mostrando en tiempo real los errores y las warnings
 
 ### 2. ¿Como se llevo a cabo?
 
-Durante la migracion del proyecto de BlueJ a IntelliJ, el propio IDE 
-realizo un analisis estatico automatico del codigo, identificando 
-problemas de estructura, organizacion de paquetes y calidad del codigo 
-fuente. IntelliJ cuenta con un motor de inspeccion integrado que señala 
-en tiempo real problemas de sintaxis, logica y convencion.
+Durante la migracion del proyecto de BlueJ a IntelliJ, el propio IntelliJ realizo un analisis estatico automatico del codigo, identificando problemas de estructura porque como se menciono antes los archivos de BlueJ eran planos y IntelliJ si exige organizacion de paquetes de manera especifica y calidad del codigo, la ventaja es que IntelliJ cuenta con una herramienta de inspeccion integrada
+la cual nos hiba señalando en tiempo real problemas de sintaxis y daba sugerencias con los warnings, logica y convencion, entonces debieron arreglarse manualmente, aqui una foto de apenas se importo
+a intelliJ desde BlueJ:
+
+![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png)
+
 
 ### 3. Resultado inicial
 
@@ -116,13 +116,14 @@ siguientes problemas principales:
 
 Al identificar los problemas tomamos las siguientes decisiones:
 
-1. **Reorganizar la estructura de directorios** al estandar de IntelliJ: 
-   src/main/java para codigo de dominio y test/java para pruebas
-2. **Corregir las declaraciones de paquete** en todas las clases para 
+**Reorganizar la estructura de directorios** al estandar de IntelliJ: 
+   src/main/java para codigo de dominio y test/java para pruebas:
+   
+**Corregir las declaraciones de paquete** en todas las clases para 
    que coincidieran con la nueva estructura de carpetas
-3. **Resolver los problemas de dependencias** agregando JUnit 5 
+**Resolver los problemas de dependencias** agregando JUnit 5 
    como libreria del modulo desde el repositorio Maven
-4. **Marcar correctamente las carpetas** como Sources Root y 
+**Marcar correctamente las carpetas** como Sources Root y 
    Test Sources Root en la configuracion del modulo
 
 ### 5. Resultado final
@@ -133,6 +134,10 @@ Despues de aplicar las correcciones:
 - Todos los archivos compilan sin errores
 - Las dependencias de JUnit 5 quedaron correctamente configuradas
 - Los 178 tests ejecutan exitosamente sin errores de compilacion
+
+  | Antes | Despues |
+|-------|---------|
+| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
 
 ### 6. Conclusiones del Analisis Estatico
 
