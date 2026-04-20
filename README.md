@@ -27,7 +27,7 @@ Tuvimos que volver a organizar el proyecto en nuevas carpetas por que este IDE a
 
 **Nota:**Sobre las carpetas java en colores son poque IntelliJ necesite que se marquen de la siguiente manera para distinguir de que clase son, el color azul denota Sources Root y el color verde Test Source Roote
 
-### Pueba Inicial e interpretacion
+### 3. Pueba Inicial e interpretacion
 
 Luego de tener el proyecto organizado de la manera adecuada que nos exige IntelliJ y tener a Jacoco seleccionado como Coverage se ejecutaron las prubas y se obtuvo el siguiente resumen:
 
@@ -61,13 +61,13 @@ Cobertura dentro de Tower:
 
 Nos vamos a enfocar en la clase Tower, tenemos un cubrimeinto real del dominio de un **60%** no se ejecutaron **46%** de los caminos logicos (Missed Branches) por lo que vamos a mejorarlos.
 
-**¿Como lo mejoramos?**
+### 4. **¿Como lo mejoramos?**
 
   Para mejorar las medidas se impelemtaron (**varios**) nuevos test en la clase TowerC2Test y en TowerAccetptance2 que se pueden ver en diferentes commits tales como "test para subir cobertura" que fue el commit final pero hubieron varios commit para lograr obtener la covertura deseada, aqui el resultado:
   
 ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a0bdcceab61d0c81d29be0ff3c80ab0d87989370/coverageFinal.png)
 
-### 7. Conclusiones del Analisis Dinamico
+### 5. Conclusiones del Analisis Dinamico
 
 1. Una buena cobertura no solo implica un alto porcentaje sino tambien probar diferentes caminos del programa incluyendo casos limite y errores
 
@@ -116,11 +116,10 @@ siguientes problemas principales:
   estandar de Java y de intelliJ.
   
 2. Al no estar organizado en el estilo de IntelliJ pues no podiamos siquiera usar las funciones que este nos ofrecia
-
    
 3. 306 warnings detectados por  IntelliJ 
   
-### 4. Decisiones tomadas
+### 4. ¿Como se soluciono?
 
 Al identificar los problemas se tomaron las siguientes decisiones:
 
@@ -131,7 +130,9 @@ Al identificar los problemas se tomaron las siguientes decisiones:
 3. Movimos la logica dentro de la carpeta de src/main/java/ y aqui se colocaron los paquetes shapes y tower que contenian las clases
    y los test se dejaron en test/java y dentro la carpeta de tests con sus respectivas clases
 
-4. Se marcaron los directorios java de la logica y los test como Sources Root y Test Sources Root Respectivamente
+4. Se marcaron los directorios java de la logica y los test como Sources Root y Test Sources Root Respectivamente con ayuda de IntelliJ:
+
+   ![image alt]()
 
 ### 5. Resultado final
 
