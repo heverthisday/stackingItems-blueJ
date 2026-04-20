@@ -132,7 +132,7 @@ Al identificar los problemas se tomaron las siguientes decisiones:
 
 4. Se marcaron los directorios java de la logica y los test como Sources Root y Test Sources Root Respectivamente con ayuda de IntelliJ:
 
-   ![image alt]()
+   ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/dff91dfe60187e187b49a24bfe3fde71f4553263/root.png)
 
 ### 5. Resultado final
 
