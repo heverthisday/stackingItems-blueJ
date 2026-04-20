@@ -80,6 +80,11 @@ Nos vamos a enfocar en la clase Tower, tenemos un cubrimeinto real del dominio d
 4. Aprendimos sobre que son los branches
 
 
+
+
+
+
+
 ## Analisis Estatico
 
 ### 1. Introduccion
@@ -102,38 +107,40 @@ a intelliJ desde BlueJ:
 Al abrir el proyecto en IntelliJ por primera vez se encontraron los 
 siguientes problemas principales:
 
-- **Estructura de directorios incorrecta**: el proyecto venia en 
-  carpetas planas de BlueJ que no corresponden a la estructura 
-  estandar de Java (src/main/java y test/java)
-- **Problemas de paquetes**: las clases no tenian declaraciones de 
-  paquete correctas al reorganizar los directorios
-- **Errores de sintaxis**: algunos archivos presentaban advertencias 
-  de compilacion al cambiar de entorno
-- **306 warnings detectados** por el inspector de IntelliJ al 
-  cargar el proyecto
+| Desorganizado | Varias warnings |
+|-------|---------|
+| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/deef98ccba45aa518e9eb9bc2573c57b1b7cda5e/warnigs.png) |
 
+1.Teniamos una estructura de directorios incorrecta el proyecto venia en 
+  carpetas planas de BlueJ que no corresponden a la estructura 
+  estandar de Java y de intelliJ.
+  
+2. Al no estar organizado en el estilo de IntelliJ pues no podiamos siquiera usar las funciones que este nos ofrecia
+
+   
+3. 306 warnings detectados por  IntelliJ 
+  
 ### 4. Decisiones tomadas
 
-Al identificar los problemas tomamos las siguientes decisiones:
+Al identificar los problemas se tomaron las siguientes decisiones:
 
-**Reorganizar la estructura de directorios** al estandar de IntelliJ: 
-   src/main/java para codigo de dominio y test/java para pruebas:
-   
-**Corregir las declaraciones de paquete** en todas las clases para 
-   que coincidieran con la nueva estructura de carpetas
-**Resolver los problemas de dependencias** agregando JUnit 5 
-   como libreria del modulo desde el repositorio Maven
-**Marcar correctamente las carpetas** como Sources Root y 
-   Test Sources Root en la configuracion del modulo
+1. Borrar todo lo relacionado con BlueJ (Todas esas carpetas que creaba BlueJ) esto porque estbamos migrando a algo totalnmente diferente (En los commits se puede evidenciar esta transicion)
+
+2. Crear las nuevas carpetas asi como nos exigia IntelliJ (Todo esto fue consultado en foros, videos y con ayuda de ver como crea intelliJ un proyecto vacio)
+
+3. Movimos la logica dentro de la carpeta de src/main/java/ y aqui se colocaron los paquetes shapes y tower que contenian las clases
+   y los test se dejaron en test/java y dentro la carpeta de tests con sus respectivas clases
+
+4. Se marcaron los directorios java de la logica y los test como Sources Root y Test Sources Root Respectivamente
 
 ### 5. Resultado final
 
 Despues de aplicar las correcciones:
 
 - La estructura del proyecto quedo organizada correctamente
-- Todos los archivos compilan sin errores
-- Las dependencias de JUnit 5 quedaron correctamente configuradas
-- Los 178 tests ejecutan exitosamente sin errores de compilacion
+- Los archivos quedan sin errores rojos
+- En setings y luego en coverage, Jacoco quedo Seleccionado como coverage runner correctamente
+- Tests se podian ejecutar exitosamente y obtener los informes de manera correcta
 
   | Antes | Despues |
 |-------|---------|
@@ -141,13 +148,11 @@ Despues de aplicar las correcciones:
 
 ### 6. Conclusiones del Analisis Estatico
 
-- La migracion de BlueJ a IntelliJ fue el principal reto del analisis 
-  estatico ya que implico reorganizar toda la estructura del proyecto
-- IntelliJ como herramienta de analisis estatico integrado permitio 
-  identificar y corregir problemas de estructura antes de ejecutar 
-  cualquier prueba
-- Tener una estructura de proyecto correcta es fundamental para poder 
-  aplicar herramientas de calidad como JaCoCo
-- La correccion de la estructura no solo resolvio los errores sino que 
-  tambien preparo el proyecto para seguir creciendo con buenas practicas
+1. La migracion de BlueJ a IntelliJ fue el principal reto del analisis estatico ya que implico reorganizar toda la estructura del proyecto pero fue una muy gran ayuda para el analisis dinamico.
+  
+2. IntelliJ como herramienta de analisis estatico permitio identificar y corregir problemas de estructura
+ 
+3. Tener una estructura de proyecto correcta es fundamental para poder aplicar herramientas de calidad como JaCoCo
+
+4.La correccion de la estructura no solo resolvio los errores sino que tambien preparo el proyecto para seguir creciendo con buenas practicas y nos deja la enseñansa que un buen IDE desde el comienso nos va a ayudar y ahorrar la extencion y el trabajo
 
