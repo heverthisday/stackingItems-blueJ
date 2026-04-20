@@ -143,9 +143,9 @@ Despues de aplicar las correcciones:
 - En setings y luego en coverage, Jacoco quedo Seleccionado como coverage runner correctamente
 - Tests se podian ejecutar exitosamente y obtener los informes de manera correcta
 
-  | Antes | Despues |
+| Antes desorganizado  | Despues sin errores rojos y bien organizado |
 |-------|---------|
-| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
+| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/85245c64c499f0817e75636d91bb1856f738bc04/ok.png)![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
 
 
 
