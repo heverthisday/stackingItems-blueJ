@@ -145,7 +145,7 @@ Despues de aplicar las correcciones:
 
 | Antes desorganizado  | Despues sin errores rojos y bien organizado |
 |-------|---------|
-| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/85245c64c499f0817e75636d91bb1856f738bc04/ok.png)![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
+| ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/6430a86b413cbc24179635145c7b4f18c0f00459/noOk.png)![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/antes.png) | ![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/85245c64c499f0817e75636d91bb1856f738bc04/ok.png)![image alt](https://github.com/heverthisday/stackingItems-blueJ/blob/a1ea073a6794772de65b9858f35c425f2d2e5c41/despues.png) |
 
 
 
